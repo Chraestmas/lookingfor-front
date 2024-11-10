@@ -2,93 +2,129 @@
   <div class="navbar">
     <div class="navbar-container">
       <div class="container-regular">
-        <router-link>Company Logo</router-link>
-        <nav>
+        <router-link to="/">
+          <img src="../../assets/lookingfor-logo.png" width="226" alt="">
+        </router-link>
+        <nav class="menu-web">
           <ul>
             <li>
-              <router-link class="nav-link2">
-                Home
-              </router-link>
+              <router-link class="nav-link2" to="/">Home</router-link>
             </li>
             <li>
-              <router-link class="nav-link2">
-                Upload
-              </router-link>
+              <router-link class="nav-link2" to="/upload-item">Upload</router-link>
             </li>
             <li>
-              <router-link class="nav-link2">
-                Search
-              </router-link>
+              <router-link class="nav-link2" to="/item-search">Search</router-link>
             </li>
             <li>
-              <router-link class="auth-btn">SIGN UP / LOG IN</router-link>
+              <router-link class="auth-btn web" to="/login">SIGN UP / LOG IN</router-link>
             </li>
           </ul>
         </nav>
-        <div class="menu-icon">
+        <div class="menu-icon" @click="toggleMenu">
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 50 50">
             <path
               d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z">
             </path>
           </svg>
         </div>
-
       </div>
     </div>
-    <div class="navbar-overlay">
+    <div class="navbar-overlay" :class="{ 'active': isMenuOpen }">
       <nav class="menu">
-        <ul>
-            <li>
-              <router-link class="nav-link2">
-                Home
-              </router-link>
+        <ul class="mobile-menu">
+          <li>
+              <router-link class="nav-link2" to="/">Home</router-link>
             </li>
             <li>
-              <router-link class="nav-link2">
-                Upload
-              </router-link>
+              <router-link class="nav-link2" to="/upload-item">Upload</router-link>
             </li>
             <li>
-              <router-link class="nav-link2">
-                Search
-              </router-link>
+              <router-link class="nav-link2" to="/item-search">Search</router-link>
             </li>
             <li>
-              <router-link class="auth-btn">SIGN UP / LOG IN</router-link>
+              <router-link class="auth-btn" to="/login">SIGN UP / LOG IN</router-link>
             </li>
-          </ul>
+        </ul>
       </nav>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+
+const isMenuOpen = ref(false);
+const router = useRouter();
+
+const toggleMenu = (event) => {
+  event.stopPropagation();
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+const closeMenu = (event) => {
+  if (!event.target.closest('.navbar-overlay') && !event.target.closest('.menu-icon')) {
+    isMenuOpen.value = false;
+  }
+};
+
+
+onMounted(() => {
+  router.afterEach(() => {
+    isMenuOpen.value = false; // 페이지 이동 후 메뉴 닫기
+  });
+});
+onMounted(() => {
+  document.addEventListener('click', closeMenu);
+
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeMenu);
+});
+
 </script>
 
 <style scoped>
-nav.menu{
-  text-align: center;
-    background: #c8c8c8;
-    min-width: 200px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    overflow: visible;
-    display: block !important;
+.menu {
+  width: 100%;
 }
-.navbar{
+.mobile-menu {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar {
   position: relative;
+  z-index: 10;
 }
-.navbar-overlay{
-  background-color: red;
+.navbar-overlay {
+  background-color: white;
   position: absolute;
   top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: none;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(-200%);
+  z-index: 1;
 }
+
+.navbar-overlay.active {
+  display: block;
+  transform: translateY(0);
+}
+
 .navbar-container {
+  position: relative;
   z-index: 5;
   width: 100%;
   max-width: 1140px;
@@ -96,6 +132,7 @@ nav.menu{
   margin-left: auto;
   padding: 20px;
   background-color: transparent;
+  background-color: white;
 }
 
 .container-regular {
@@ -121,7 +158,6 @@ nav {
 }
 
 .auth-btn {
-  margin-left: 120px;
   padding: 12px 25px;
   background-color: rgb(1, 47, 108);
   transition-property: all;
@@ -132,6 +168,10 @@ nav {
   line-height: 20px;
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+.auth-btn.web {
+  margin-left: 120px;
 }
 
 .nav-link2 {
@@ -161,13 +201,30 @@ nav {
   padding: 12px;
 }
 
+@media screen and (max-width: 767px) {
+  .mobile-menu {
+    flex-direction: column;
+    padding-bottom: 30px;
+    padding-left: 0;
+  }
+
+  .nav-link2 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
 @media screen and (max-width: 991px) {
   .menu-icon {
     display: block;
   }
 
-  nav {
+  .menu-web {
     display: none;
+  }
+
+  .navbar-overlay {
+    display: block;
   }
 }
 </style>
