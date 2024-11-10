@@ -11,5 +11,4 @@ import MainRecentItemSection from '@/components/section/MainRecentItemSection.vu
 </script>
 
 <style scoped>
-
 </style>
