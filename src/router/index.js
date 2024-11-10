@@ -1,11 +1,11 @@
 import MainPage from '@/pages/MainPage.vue';
-import SearchPage from '@/pages/SearchPage.vue';
+import UploadPage from '@/pages/UploadPage.vue';
 import {  createRouter, createWebHistory } from 'vue-router'
 
 
 const routes = [
     { path: '/', component: MainPage},
-    { path: '/search', component: SearchPage},
+    { path: '/upload', component: UploadPage},
 ]
 
 const router = createRouter({
