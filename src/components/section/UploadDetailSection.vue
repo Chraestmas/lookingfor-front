@@ -126,7 +126,7 @@
               <div>Oops! Something went wrong while submitting the form.</div>
             </div>
           </div>
-          <p class="pricing-card-text">Status &amp; Pickup person name</p>
+          <p class="pricing-card-text">Status &amp;Pickup person name</p>
         </div>
         <div id="w-node-e9382a67-ffad-90d1-e2e2-fc794f296439-9a08dfa8" class="pricing-card-three">
           <div class="w-form">
