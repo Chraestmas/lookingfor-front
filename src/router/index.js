@@ -11,7 +11,7 @@ const routes = [
     { path: '/item-search', component: SearchPage},
     { path: '/login', component: LoginPage},
 ]
-
+ 
 const router = createRouter({
   history: createWebHistory(),
   routes,
