@@ -146,6 +146,11 @@
       </div>
     </div>
   </section>
+  <section class="section-2">
+    <div class="w-layout-blockcontainer w-container">
+      <a href="" class="button-primary w-button">Save</a> <!-- 링크할 페이지 미정 -->
+    </div>
+  </section>
 </template>
 
 <script setup>
