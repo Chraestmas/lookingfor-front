@@ -3,21 +3,27 @@
     <div class="ms-form-block-2 w-form">
       <form id="wf-form-Signup-Form" name="wf-form-Signup-Form" data-name="Signup Form" method="get"
         data-ms-form="signup" class="ms-form" data-wf-page-id="67024f5715ea5801d54d451b"
-        data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d">
+        data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d"
+        @submit.prevent="submitFormData"
+        >
         <h2 class="ms-form-heading">Edit Account</h2>
-        <div class="box"><label for="Email-One-2" class="ms-input-label">New Email Address</label><input
+        <div class="box"><label for="Email-One-2" class="ms-input-label">New Email Address</label>
+          <input
+          :disabled="codePopupOpen"
+            :readonly="isChecked"
             class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2"
             placeholder="e.g. email@gmail.com" type="email" id="Email-One-2" data-ms-member="email" required=""></div>
-        <div class="box"><label for="Password-One-2" class="ms-input-label">New Password:</label><input
+        <div v-if="isChecked" class="box"><label for="Password-One-2" class="ms-input-label">New Password:</label><input
             class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2"
             placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
         </div>
-        <div class="box"><label for="Password-One-3" class="ms-input-label">Confirm New Password:</label><input
+        <div v-if="isChecked" class="box"><label for="Password-One-3" class="ms-input-label">Confirm New Password:</label><input
             class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2"
             placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
         </div>
         <div>
-          <button style="cursor: pointer;" class="button-primary w-button">Update Account</button>
+          <button v-if="isChecked" style="cursor: pointer;" class="button-primary w-button">Update Account</button>
+          <button v-else :disabled="codePopupOpen" style="cursor: pointer;" class="button-primary w-button">Send Code</button>
         </div>
       </form>
       <div v-if="codePopupOpen" class="f-alert-regular-2">
@@ -35,12 +41,18 @@
             address.</div>
           <div class="w-form">
             <form id="wf-form-" name="wf-form-" data-name="" method="get" data-wf-page-id="67024f5715ea5801d54d451b"
-              data-wf-element-id="6a176fda-e338-0eb5-f768-71ba31c82752"><label for="code">Code( 6 letters
+              data-wf-element-id="6a176fda-e338-0eb5-f768-71ba31c82752"
+              @submit.prevent="submitCodeData"
+              >
+              <label for="code">Code( 6 letters
                 ):</label>
-                <input class="w-input" maxlength="256" name="email" data-name="Email" placeholder=""
-                type="email" id="code" required="">
+                <input class="w-input" maxlength="256" name="code" data-name="code" placeholder=""
+                 id="code" required=""
+                 
+                 >
                 <input type="submit" data-wait="Please wait..."
-                class="button-primary w-button" value="Submit"></form>
+                class="button-primary w-button" value="Submit">
+            </form>
             <!-- <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
         </div>
@@ -64,6 +76,46 @@
 import { ref } from 'vue';
 
 const codePopupOpen = ref(false);
+const isChecked = ref(false);
+
+function openCodePopup(){
+  codePopupOpen.value = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCodePopup(){
+  codePopupOpen.value = false;
+  document.body.style.overflow = 'auto';
+}
+function submitCodeData(){
+  // 서버로 인증 코드 보내기
+  // 인증 코드 보내기 성공하면
+  closeCodePopup();
+  isChecked.value = true;
+
+  //인증코드가 잘못되었다면
+
+
+}
+
+
+function submitFormData(){
+  if(!isChecked.value){ // 코드 보내기
+    // email로 코드보내기 api 요청
+    //email로 코드 보내기가 성공하면
+    openCodePopup();
+
+    // email로 코드보내기가 실패하면
+    //실패 처리
+
+
+  }else{ // 재설정할 비밀번호 보내기
+    // 비밀번호 재설정이 성공하면
+    
+    
+    // 실패하면
+  }
+}
 
 </script>
 
@@ -92,5 +144,10 @@ const codePopupOpen = ref(false);
     vertical-align: middle;
     background-color: #ffffff;
     border: 1px solid #cccccc;
+}
+
+.button-primary[disabled] {
+    color: #fff;
+    background-color: #32343a;
 }
 </style>
