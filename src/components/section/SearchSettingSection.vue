@@ -116,7 +116,7 @@
         </div>
         <div id="w-node-fabe12dd-78dd-0081-106a-94a6d1231d67-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Stanley Bottle</h3>
-          <p class="pricing-card-text">Water Bottle<br>Lost &amp; Found<br>Found 2024/12/24<br></p>
+          <p class="pricing-card-text">Water Bottle<br>Lost &amp;Found<br>Found 2024/12/24<br></p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +126,7 @@
         </div>
         <div id="w-node-fabe12dd-78dd-0081-106a-94a6d1231d76-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Essentials Hoodie</h3>
-          <p class="pricing-card-text">Clothes<br>Lost &amp; Found<br>Found 2024/08/27</p>
+          <p class="pricing-card-text">Clothes<br>Lost &amp;Found<br>Found 2024/08/27</p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -148,7 +148,7 @@
         </div>
         <div id="w-node-d23f231b-6837-de3f-a3d7-c773089d1bfc-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Stanley Bottle</h3>
-          <p class="pricing-card-text">Water Bottle<br>Lost &amp; Found<br>Found 2024/12/24<br></p>
+          <p class="pricing-card-text">Water Bottle<br>Lost &amp;Found<br>Found 2024/12/24<br></p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,7 +158,7 @@
         </div>
         <div id="w-node-d23f231b-6837-de3f-a3d7-c773089d1c0b-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Essentials Hoodie</h3>
-          <p class="pricing-card-text">Clothes<br>Lost &amp; Found<br>Found 2024/08/27</p>
+          <p class="pricing-card-text">Clothes<br>Lost &amp;Found<br>Found 2024/08/27</p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +180,7 @@
         </div>
         <div id="w-node-_642a2a8c-5113-b291-dcb8-01160ce55a44-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Stanley Bottle</h3>
-          <p class="pricing-card-text">Water Bottle<br>Lost &amp; Found<br>Found 2024/12/24<br></p>
+          <p class="pricing-card-text">Water Bottle<br>Lost &amp;Found<br>Found 2024/12/24<br></p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -190,7 +190,7 @@
         </div>
         <div id="w-node-_642a2a8c-5113-b291-dcb8-01160ce55a53-b81c6c6d" class="pricing-card-three"><img src="images/Screenshot-2024-10-27-at-3.05.48-PM.png" loading="lazy" alt="" class="pricing-image">
           <h3>Essentials Hoodie</h3>
-          <p class="pricing-card-text">Clothes<br>Lost &amp; Found<br>Found 2024/08/27</p>
+          <p class="pricing-card-text">Clothes<br>Lost &amp;Found<br>Found 2024/08/27</p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
