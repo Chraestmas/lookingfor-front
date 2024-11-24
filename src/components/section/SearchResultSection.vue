@@ -21,9 +21,11 @@
           <p class="pricing-card-text">Water Bottle<br>Lost &amp; Found<br>Found 2024/12/24<br></p>
           <a href="item-details.html" class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
-            <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="arrow-embed-2 w-embed">
+              <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M11.72 15L16.3472 10.357C16.7732 9.92932 16.7732 9.23603 16.3472 8.80962L11.72 4.16667L10.1776 5.71508L12.9425 8.4889H4.16669V10.6774H12.9425L10.1776 13.4522L11.72 15Z" fill="currentColor"></path>
-              </svg></div>
+              </svg>
+            </div>
           </a>
         </div>
         <div id="w-node-fabe12dd-78dd-0081-106a-94a6d1231d76-b81c6c6d" class="pricing-card-three">
