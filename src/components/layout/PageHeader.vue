@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div class="navbar-container">
+    <div class="navbar-container" :class="{search:isSearch}">
       <div class="container-regular">
         <router-link to="/">
           <img src="../../assets/lookingfor-logo.png" width="226" alt="">
@@ -53,9 +53,12 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const isMenuOpen = ref(false);
+const isSearch = ref(false);
+const route = useRoute();
+
 const router = useRouter();
 
 const toggleMenu = (event) => {
@@ -72,6 +75,12 @@ const closeMenu = (event) => {
 
 onMounted(() => {
   router.afterEach(() => {
+    console.log(route.path);
+    if(route.path === '/item-search'){
+      isSearch.value =true;
+    }else{
+      isSearch.value =false;
+    }
     isMenuOpen.value = false; // 페이지 이동 후 메뉴 닫기
   });
 });
@@ -133,6 +142,10 @@ li {
   padding: 20px;
   background-color: transparent;
   background-color: white;
+}
+
+.navbar-container.search{
+  background-color: #f5f7fa;
 }
 
 .container-regular {

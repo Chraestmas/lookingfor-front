@@ -1,3 +1,4 @@
+import CreateAccount from '@/pages/CreateAccount.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import MainPage from '@/pages/MainPage.vue';
 import SearchPage from '@/pages/SearchPage.vue';
@@ -10,6 +11,7 @@ const routes = [
     { path: '/upload-item', component: UploadPage},
     { path: '/item-search', component: SearchPage},
     { path: '/login', component: LoginPage},
+    { path: '/create-account', component: CreateAccount},
 ]
  
 const router = createRouter({
