@@ -81,6 +81,9 @@ import SearchResultSection from '@/components/section/SearchResultSection.vue';
 const itemList = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const categoryIds = ref([]);
+const foundYn = ref(false);
+const itemName = ref(null);
 
 // 페이지 변경 시 API 요청
 async function apiRequest(categories, unclaimedOnly = false, itemName = null, page = 1) {
@@ -104,12 +107,16 @@ async function apiRequest(categories, unclaimedOnly = false, itemName = null, pa
 function changePage(page) {
   if (page < 1 || page > totalPages.value) return;  // 유효하지 않은 페이지는 무시
   currentPage.value = page;
-  apiRequest([], false, null, page);  // 여기서 필터링 조건을 그대로 전달
+  apiRequest(categoryIds.value, foundYn.value, itemName.value, page);  // 여기서 필터링 조건을 그대로 전달
 }
 
 function onUpdateFilter(test){
   console.log(test);
-  apiRequest(test.categoryId, test.foundYn, test.itemName)
+  apiRequest(test.categoryId, test.foundYn, test.itemName);
+  currentPage.value = 1;
+  categoryIds.value = test.categoryId;
+  foundYn.value = test.foundYn;
+  itemName.value = test.itemName
 }
 
 // 컴포넌트 마운트 시 첫 API 요청

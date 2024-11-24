@@ -44,7 +44,7 @@
   </div>
   <div class="gallery-sticky-2">
     <div class="form-block-2 w-form">
-      <form id="email-form" name="email-form" data-name="Email Form" method="get">
+      <div id="email-form" name="email-form" data-name="Email Form" method="get">
         <div class="f-field-wrapper">
           <div class="f-field-icon-wrapper">
             <div class="f-field-icon w-embed">
@@ -52,11 +52,11 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
               </svg>
             </div>
-            <input class="f-field-input-icon w-input" maxlength="256" name="Input-Field-Icon-L" data-name="Input Field Icon L" placeholder="Search Items" type="text" id="Input-Field-Icon-L">
-            <a href="#" class="button w-button">Search</a>
+            <input @input="(e)=>itemName = e.target.value" class="f-field-input-icon w-input" maxlength="256" name="Input-Field-Icon-L" data-name="Input Field Icon L" placeholder="Search Items" type="text" id="Input-Field-Icon-L">
+            <button @click="onItemNameSearch" class="button w-button">Search</button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -66,6 +66,7 @@ import { ref, defineEmits } from 'vue';
 
 const isModalOpen = ref(false);
 const categories = ref([{id:1, name:'aaa'}, {id:2, name:'bbb'}, {id:3, name:'ccc'}]);
+const itemName = ref('');
 
 const emit = defineEmits(['update-filter'])
 
@@ -105,7 +106,12 @@ function saveChanges() {
   // Save 버튼을 눌렀을 때 변경된 체크박스를 기반으로 API 요청
   isModalOpen.value = false;
   
-  emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value});
+  emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value, itemName:itemName.value});
+}
+
+function onItemNameSearch(){
+  emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value , itemName:itemName.value});
+
 }
 
 
