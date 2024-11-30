@@ -51,6 +51,5 @@
 <style scoped>
 .ms-input{
   width: 100%;
-  margin-top: 30px;
 }
 </style>
