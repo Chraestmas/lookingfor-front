@@ -19,7 +19,7 @@
         <div>
           <a href="index.html" class="button-primary w-button">Log in</a>
         </div>
-        <a href="login.html" target="_blank"
+        <RouterLink to="/login" target="_blank"
           class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
           <div class="ms-button-flex">
             <div>Already have an account?</div>
@@ -30,7 +30,7 @@
                 </path>
               </svg></div>
           </div>
-        </a>
+        </RouterLink>
       </form>
       <!-- <div class="w-form-done">
         <div>Thank you! Your submission has been received!</div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" id="#">
     <div class="navbar-container" :class="{search:isSearch}">
       <div class="container-regular">
         <router-link to="/">

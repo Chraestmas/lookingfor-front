@@ -1,13 +1,16 @@
 <template>
-  <div class="waves-section-hero-6">
-    <div class="hero-wrapper-two">
-      <h1 class="heading-4">Lost &amp;&nbsp;Found</h1>
-      <p class="margin-bottom-24px">Find your lost items lost within a building with the help of others. <br>If you find
-        a lost item, then upload it for others to claim.</p><a href="/item-search"
-        class="button-primary w-button">Search Lost items</a><a href="/upload-item"
-        class="button-primary w-button">Upload lost item</a>
+    <div class="waves-section-hero-6">
+        <div class="hero-wrapper-two">
+            <h1 class="heading-4">Lost &amp;&nbsp;Found</h1>
+            <p class="margin-bottom-24px">Find your lost items lost within a building with the help of others. <br>If
+                you find
+                a lost item, then upload it for others to claim.</p>
+                <RouterLink to="/item-search"
+                class="button-primary w-button">Search Lost items</RouterLink>
+                <RouterLink to="/upload-item"
+                class="button-primary w-button">Upload lost item</RouterLink>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -15,7 +18,7 @@
 
 <style scoped>
 .waves-section-hero-6 {
-  color: white;
+    color: white;
     background-image: url(https://cdn.prod.website-files.com/66f8d5504594ca1c1fb8ded5/671dd0f28c5f3365de1d8415_yiss-campus-fall-2016.jpg);
     background-position: 50%;
     background-size: 1920px;
@@ -23,6 +26,7 @@
     padding-bottom: 88px;
     position: relative;
 }
+
 .hero-wrapper-two {
     text-align: center;
     flex-direction: column;
@@ -48,6 +52,7 @@ h1 {
 .margin-bottom-24px {
     margin-bottom: 24px;
 }
+
 p {
     margin-top: 0;
     margin-bottom: 10px;
@@ -87,7 +92,4 @@ p {
         padding-top: 160px;
     }
 }
-
-
-
 </style>
