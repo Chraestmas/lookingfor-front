@@ -1,21 +1,80 @@
 <template>
   <SearchImageSection @upload-image="handleImageUpload"/>
-  <SearchDetailSection/>
+  <SearchDetailSection @update-form="handleFormUpdate" :initialData="formData" />
+  <section class="section-2">
+    <div class="w-layout-blockcontainer w-container">
+      <button class="button-primary w-button">{{isEdit ? "edit" : "create"}}</button>
+    </div>
+  </section>
 </template>
 
 <script setup>
 
 import SearchDetailSection from '@/components/section/UploadDetailSection.vue';
 import SearchImageSection from '@/components/section/UploadImageSection.vue';
-import { ref } from 'vue';
-const imagesToUpload = ref([]);
+import axios from 'axios';
+import { ref, defineProps, onMounted } from 'vue';
+// Props로 전달받은 isEdit 상태
+const props = defineProps({
+  isEdit: {
+    type: Boolean,
+    required: true
+  }
+});
 
+// formData의 초기 상태
+const formData = ref({
+  id:'',
+	name:'',
+	categoryId:'',
+	categoryName:'',
+	foundDate:'',
+	nameTag:'',
+	locationId:'',
+	locationName:'',
+	foundYn:'',
+	pickupDate:'',
+	pickupPersonName:'',
+	description:'',
+	userId :''
+});
+
+// 이미지 업로드 처리
+const imagesToUpload = ref([]);
 const handleImageUpload = (uploadedFiles) => {
   imagesToUpload.value = uploadedFiles;
 };
 
+// 서버에서 데이터를 가져오는 함수 (예시)
+const fetchFormData = async () => {
+  try {
+    // 서버에서 기존 데이터 가져오는 예시
+    // 실제로는 axios나 fetch로 API 호출을 해야 합니다.
+    const response = await axios.get(`http://localhost:8081/api/item/1`); // 예시 URL
+
+    // 데이터를 formData에 할당
+    formData.value = response.data;
+  } catch (error) {
+    console.error('Error fetching form data:', error);
+  }
+};
+
+// Form 데이터 업데이트 (SearchDetailSection에서 발생하는 이벤트 처리)
+const handleFormUpdate = (data) => {
+  formData.value = data;
+  console.log('Form Data:', formData.value);
+};
+
+// 컴포넌트가 마운트될 때 isEdit 상태에 따라 서버에서 데이터를 불러옴
+onMounted(() => {
+  if (props.isEdit) {
+    fetchFormData();
+  } 
+});
 </script>
 
 <style coped>
-
+.section-2 {
+  padding: 10px 0 60px;
+}
 </style>
