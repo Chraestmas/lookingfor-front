@@ -94,63 +94,63 @@
             </div>
           </form>
         </div>
-      </div>  
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+// import { ref, defineEmits } from 'vue';
 
-const isModalOpen = ref(false);
-const categories = ref([{id:1, name:'aaa'}, {id:2, name:'bbb'}, {id:3, name:'ccc'}]);
-const itemName = ref('');
+// const isModalOpen = ref(false);
+// // const categories = ref([{id:1, name:'aaa'}, {id:2, name:'bbb'}, {id:3, name:'ccc'}]);
+// const itemName = ref('');
 
-const emit = defineEmits(['update-filter'])
-
-
-// 선택한 체크박스 정보를 담아줄 배열
-const selectedCategories = ref([]);
-// uclaimedOnly 선택 여부
-const unclaimedOnly = ref(false);
+// const emit = defineEmits(['update-filter'])
 
 
-// 초기 상태 저장
-let initialSelectedCategories = [];
-let initialUnclaimedOnly = false;
+// // 선택한 체크박스 정보를 담아줄 배열
+// const selectedCategories = ref([]);
+// // uclaimedOnly 선택 여부
+// const unclaimedOnly = ref(false);
 
-function changeModalStatus() {
-  isModalOpen.value = !isModalOpen.value
-  if (isModalOpen.value) {
-    // 모달이 열릴 때 초기 상태를 저장
-    initialSelectedCategories = [...selectedCategories.value];
-    initialUnclaimedOnly = unclaimedOnly.value;
-  }else{
-    selectedCategories.value = [...initialSelectedCategories];
-    unclaimedOnly.value = initialUnclaimedOnly;
-    isModalOpen.value = false;
-  }
-}
 
-function cancelChanges() {
-  // Cancel 버튼을 눌렀을 때 초기 상태로 되돌리기
-  selectedCategories.value = [...initialSelectedCategories];
-  unclaimedOnly.value = initialUnclaimedOnly;
-  isModalOpen.value = false;
+// // 초기 상태 저장
+// let initialSelectedCategories = [];
+// let initialUnclaimedOnly = false;
 
-}
+// function changeModalStatus() {
+//   isModalOpen.value = !isModalOpen.value
+//   if (isModalOpen.value) {
+//     // 모달이 열릴 때 초기 상태를 저장
+//     initialSelectedCategories = [...selectedCategories.value];
+//     initialUnclaimedOnly = unclaimedOnly.value;
+//   }else{
+//     selectedCategories.value = [...initialSelectedCategories];
+//     unclaimedOnly.value = initialUnclaimedOnly;
+//     isModalOpen.value = false;
+//   }
+// }
 
-function saveChanges() {
-  // Save 버튼을 눌렀을 때 변경된 체크박스를 기반으로 API 요청
-  isModalOpen.value = false;
+// function cancelChanges() {
+//   // Cancel 버튼을 눌렀을 때 초기 상태로 되돌리기
+//   selectedCategories.value = [...initialSelectedCategories];
+//   unclaimedOnly.value = initialUnclaimedOnly;
+//   isModalOpen.value = false;
+
+// }
+
+// function saveChanges() {
+//   // Save 버튼을 눌렀을 때 변경된 체크박스를 기반으로 API 요청
+//   isModalOpen.value = false;
   
-  emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value, itemName:itemName.value});
-}
+//   emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value, itemName:itemName.value});
+// }
 
-function onItemNameSearch(){
-  emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value , itemName:itemName.value});
+// function onItemNameSearch(){
+//   emit('update-filter', { categoryId : selectedCategories.value, foundYn: unclaimedOnly.value , itemName:itemName.value});
 
-}
+// }
 
 
 </script>
