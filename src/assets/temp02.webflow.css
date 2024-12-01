@@ -1832,7 +1832,7 @@ body {
   max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
-  padding: 20px;
+  padding: 20px 20px 20px 20px;
 }
 
 .container-regular-2 {
@@ -5717,6 +5717,7 @@ body {
     text-align: center;
     font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
     font-size: 43px;
+    margin: 20px 0px 15px 0px;
   }
 
   .f-image-cover-2 {
