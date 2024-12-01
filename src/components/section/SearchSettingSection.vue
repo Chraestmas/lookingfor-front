@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>재우님 페이지</h1> -->
   <section class="gallery-scroll-2">
     <div class="container-3">
       <h1 class="heading-7">Search Items</h1>
@@ -95,6 +94,7 @@
             </div>
           </form>
         </div>
+      </div>  
     </div>
   </section>
 </template>
