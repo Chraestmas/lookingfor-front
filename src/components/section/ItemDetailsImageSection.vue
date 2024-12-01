@@ -6,28 +6,37 @@
             </div>
         </div>
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" 
+        class="carousel slide" 
+        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                <img src="../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png" class="d-block w-100" alt="...">
+                <div class="carousel-item ">
+                    <img src="../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png"
+                        class="d-block w-100" alt="...">
                 </div>
-                <div class="carousel-item">
-                <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
+                <div class="carousel-item ">
+                    <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
                 </div>
-                <div class="carousel-item">
-                <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
+                <div class="carousel-item ">
+                    <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <button @click="moveToPrevSlide" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <button  @click="moveToNextSlide" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -69,7 +78,8 @@
         <div class="container-9">
             <div class="hero-wrapper-two-4">
                 <h1>Description</h1>
-                <p class="margin-bottom-24px-5">Slightly cracked screen, jelly case w/ ornaments inside, out of battery when found</p>
+                <p class="margin-bottom-24px-5">Slightly cracked screen, jelly case w/ ornaments inside, out of battery
+                    when found</p>
             </div>
         </div>
     </section>
@@ -82,21 +92,46 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
+const currentIndex = ref(0); // 현재 슬라이드 인덱스
+const slides = ref([
+  "../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png",
+  "../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png",
+  "../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"
+]);
+
+
+const moveToNextSlide = () => {
+    console.log(currentIndex.value)
+  if (currentIndex.value < slides.value.length - 1) {
+    currentIndex.value++;
+  } else {
+    currentIndex.value = 0; // 첫 번째로 돌아갑니다.
+  }
+};
+
+const moveToPrevSlide = () => {
+    console.log(currentIndex.value)
+  if (currentIndex.value > 0) {
+    currentIndex.value--;
+  } else {
+    currentIndex.value = slides.value.length - 1; // 마지막으로 돌아갑니다.
+  }
+};
 
 
 </script>
 
 <style scoped>
-
-.carousel{
+.carousel {
     width: 900px;
     height: 400px;
     margin: 50px auto 25px auto;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-.bd-example > :last-child {
+.bd-example> :last-child {
     margin-bottom: 0;
 }
 
@@ -138,7 +173,11 @@
     transition: opacity .6s ease;
 }
 
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
@@ -149,32 +188,48 @@ button {
     border-radius: 0;
 }
 
-[type="button"], [type="reset"], [type="submit"], button {
+[type="button"],
+[type="reset"],
+[type="submit"],
+button {
     -webkit-appearance: button;
 }
 
 .carousel-inner {
     position: relative;
-    width: 100%;
-    overflow: hidden;
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    /* overflow: hidden; */
+    transition: transform 0.5s ease-in-out; /* 부드러운 전환 */
 }
 
 .carousel-item {
     position: relative;
-    display: none;
-    float: left;
-    width: 100%;
-    margin-right: -100%;
+    /* display: none; */
+    /* float: left; */
+    flex-shrink: 0;
+    width: 900px;
+    height: 400px;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transition: transform .6s ease-in-out;
 }
-
-.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+.carousel-item img{
+    width: 100%;
+    height: 100%;
+     object-fit: cover;
+}
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
     display: block;
 }
 
-[type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled), button:not(:disabled) {
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
+button:not(:disabled) {
     cursor: pointer;
 }
 
@@ -186,7 +241,8 @@ button {
     right: 0;
 }
 
-.carousel-control-next, .carousel-control-prev {
+.carousel-control-next,
+.carousel-control-prev {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -204,15 +260,23 @@ button {
     transition: opacity .15s ease;
 }
 
-[type="button"], [type="reset"], [type="submit"], button {
+[type="button"],
+[type="reset"],
+[type="submit"],
+button {
     -webkit-appearance: button;
 }
 
-button, select {
+button,
+select {
     text-transform: none;
 }
 
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
@@ -231,7 +295,8 @@ button {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
-.carousel-control-next-icon, .carousel-control-prev-icon {
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
     display: inline-block;
     width: 2rem;
     height: 2rem;
@@ -240,16 +305,17 @@ button {
     background-size: 100% 100%;
 }
 
-.visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within) {
-    position: absolute!important;
-    width: 1px!important;
-    height: 1px!important;
-    padding: 0!important;
-    margin: -1px!important;
-    overflow: hidden!important;
-    clip: rect(0,0,0,0)!important;
-    white-space: nowrap!important;
-    border: 0!important;
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }
 
 @media (min-width: 1200px) {
@@ -269,20 +335,6 @@ button {
     -moz-user-select: none;
     user-select: none;
 }
-
-.w-100 {
-    width: 100%!important;
-}
-
-.d-block {
-    display: block!important;
-}
-
-img, svg {
-    vertical-align: middle;
-}
-
-
 
 
 </style>
