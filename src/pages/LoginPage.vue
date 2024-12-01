@@ -10,5 +10,8 @@
 </script>
 
 <style coped>
-
+.box{
+  display: flex;
+  flex-direction: column;
+}
 </style>

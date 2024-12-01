@@ -9,7 +9,8 @@
             `http://localhost:8001${item.pictures[0].url}?t=${new Date().getTime()}`"
             loading="lazy" alt="" class="pricing-image">
           <h3>{{item.name}}</h3>
-          <p class="pricing-card-text">{{item.categoryName}}<br>{{item.locationName}}<br>Found {{item.foundDate}}<br></p><a :href="`/item-details/${item.id}`"
+          <p class="pricing-card-text">{{item.categoryName}}<br>{{item.locationName}}<br>Found {{item.foundDate}}<br></p>
+          <RouterLink :to="`/item-details/${item.id}`"
             class="text-link-arrow-2 w-inline-block">
             <div>Learn more</div>
             <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -18,7 +19,7 @@
                   d="M11.72 15L16.3472 10.357C16.7732 9.92932 16.7732 9.23603 16.3472 8.80962L11.72 4.16667L10.1776 5.71508L12.9425 8.4889H4.16669V10.6774H12.9425L10.1776 13.4522L11.72 15Z"
                   fill="currentColor"></path>
               </svg></div>
-          </a>
+          </RouterLink>
         </div>
       </div>
     </div>

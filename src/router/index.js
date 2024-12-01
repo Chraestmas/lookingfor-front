@@ -1,6 +1,7 @@
 import CreateAccount from '@/pages/CreateAccount.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import MainPage from '@/pages/MainPage.vue';
+import PasswordRecovery from '@/pages/PasswordRecovery.vue';
 import SearchPage from '@/pages/SearchPage.vue';
 import UploadPage from '@/pages/UploadPage.vue';
 import ItemDetails from '@/pages/ItemDetails.vue';
@@ -14,6 +15,7 @@ const routes = [
     { path: '/login', component: LoginPage},
     { path: '/create-account', component: CreateAccount},
     { path: '/item-details', component: ItemDetails},
+    { path: '/password-recovery', component: PasswordRecovery},
 ]
  
 const router = createRouter({
