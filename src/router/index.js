@@ -5,6 +5,7 @@ import MainPage from '@/pages/MainPage.vue';
 import PasswordRecovery from '@/pages/PasswordRecovery.vue';
 import SearchPage from '@/pages/SearchPage.vue';
 import UploadPage from '@/pages/UploadPage.vue';
+import ItemDetails from '@/pages/ItemDetails.vue';
 import {  createRouter, createWebHistory } from 'vue-router'
 
 
@@ -14,10 +15,11 @@ const routes = [
     { path: '/item-search', component: SearchPage},
     { path: '/login', component: LoginPage},
     { path: '/create-account', component: CreateAccount},
+    { path: '/item-details', component: ItemDetails},
     { path: '/password-recovery', component: PasswordRecovery},
     { path: '/item/:id', component: ItemDetail},
 ]
-
+ 
 const router = createRouter({
   history: createWebHistory(),
   routes,

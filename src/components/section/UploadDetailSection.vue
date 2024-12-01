@@ -1,4 +1,6 @@
 <template>
+  <h1>윤서님 페이지 </h1>
+  <div class="features-block"></div>
   <section class="features-metrics">
     <div class="container-name">
       <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
