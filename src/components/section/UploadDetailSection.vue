@@ -1,21 +1,25 @@
 <template>
   <section class="features-metrics">
+    <div class="container-name">
+      <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
+      <p class="pricing-card-text" style="text-align: center;">Item Name</p>
+    </div>
     <div class="container-4">
       <div class="pricing-grid">
         <!-- Category Dropdown -->
         <div class="pricing-card-three">
-          <select v-model="category" @input="updateParent">
-            <option value="" disabled>Select Category</option>
-            <option v-for="(cat, index) in categories" :key="index" :value="cat">{{ cat }}</option>
+          <select  @input="(e)=>{category = e.target.value; updateParent()}">
+            <option value="" >Select Category</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
           <p class="pricing-card-text">Category</p>
         </div>
 
         <!-- Location Dropdown -->
         <div class="pricing-card-three">
-          <select v-model="location" @input="updateParent">
-            <option value="" disabled>Select Location</option>
-            <option v-for="(loc, index) in locations" :key="index" :value="loc">{{ loc }}</option>
+          <select  @input="(e)=> {location = e.target.value; updateParent()}">
+            <option value="" >Select Location</option>
+            <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
           </select>
           <p class="pricing-card-text">Current Location</p>
         </div>
@@ -30,10 +34,10 @@
           <p class="pricing-card-text">Date Found</p>
         </div>
         <div class="pricing-card-three">
-          <input type="text" v-model="pickupPersonName" @input="updateParent" placeholder="Enter Status" />
+          <input type="text" v-model="pickupPersonName" @input="updateParent" placeholder="Enter Pickup Person Name" />
           <div class="f-toggle-wrap-2">
             <label class="toggle-container">
-              <input type="checkbox" v-model="foundYn" @input="updateParent" />
+              <input type="checkbox" name="isFound" v-model="isFound" @input="(e)=>{ isFound = e.target.checked; updateParent()}" />
               <span class="slider"></span>
             </label>
             <div>Found?</div>
@@ -60,7 +64,8 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import axios from 'axios';
+import { ref, watch, defineProps, defineEmits, onMounted } from 'vue';
 
 // props로 부모 컴포넌트에서 전달받은 데이터
 const props = defineProps({
@@ -71,16 +76,17 @@ const props = defineProps({
 });
 
 // 드롭다운 데이터
-const categories = ref(['Electronics', 'Clothing', 'Furniture', 'Books']);
-const locations = ref(['New York', 'Los Angeles', 'Chicago', 'San Francisco']);
+const categories = ref([]);
+const locations = ref([]);
 
 // 내부 데이터와 v-model 바인딩
+const name = ref(props.initialData.name || '');
 const category = ref(props.initialData.categoryId || '');
 const location = ref(props.initialData.locationId || '');
 const nameTag = ref(props.initialData.nameTag || '');
 const dateFound = ref(props.initialData.foundDate || '');
 const pickupPersonName = ref(props.initialData.pickupPersonName || '');
-const foundYn = ref(props.initialData.foundYn || false); // Default to false
+const isFound = ref(props.initialData.foundYn === 'Y'); // Default to false
 const dateRetrieved = ref(props.initialData.pickupDate || '');
 const description = ref(props.initialData.description || '');
 
@@ -90,25 +96,43 @@ const emit = defineEmits(['update-form']);
 // input 값이 변경될 때마다 부모에게 데이터 전달
 const updateParent = () => {
   emit('update-form', {
+    name : name.value,
     categoryId: category.value,
     locationId: location.value,
     nameTag: nameTag.value,
     foundDate: dateFound.value,
     pickupPersonName: pickupPersonName.value,
-    foundYn: foundYn.value,
+    foundYn: isFound.value ? 'Y' : 'N',
     pickupDate: dateRetrieved.value,
-    description: description.value
+    description: description.value,
+    userId:'adm1'
   });
 };
+async function fetchCategory(){
+  let res = await axios.get('http://localhost:8001/api/category');
+  categories.value = res.data;
+  console.log(res.data);
+}
+
+async function fetchLocation(){
+  let res = await axios.get('http://localhost:8001/api/location');
+  locations.value = res.data;
+  console.log(res.data);
+}
+onMounted(()=>{
+  fetchCategory();
+  fetchLocation();
+});
 
 // 초기 데이터를 props로 받아왔을 때, 데이터가 바뀌면 반영하도록 watch 설정
 watch(() => props.initialData, (newData) => {
+  name.value = newData.name;
   category.value = newData.categoryId;
   location.value = newData.locationId;
   nameTag.value = newData.nameTag;
   dateFound.value = newData.foundDate;
   pickupPersonName.value = newData.pickupPersonName;
-  foundYn.value = newData.foundYn;
+  isFound.value = newData.foundYn === 'Y';
   dateRetrieved.value = newData.pickupDate;
   description.value = newData.description;
 }, { immediate: true });
@@ -237,4 +261,21 @@ input:checked + .slider:before {
 input:checked + .slider {
   background-color: #012f6c;
 }
+
+.container-name {
+        max-width: 940px;
+        margin: 0 auto;
+    }
+
+@media screen and (max-width: 991px) {
+    .pricing-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .container-name {
+        max-width: 728px;
+        padding:0 10px;
+    }
+  }
+  
 </style>
