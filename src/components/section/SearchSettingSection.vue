@@ -62,7 +62,8 @@
         <div class="f-line-regular"></div>
         <div class="w-form">
           <form id="email-form" name="email-form" data-name="Email Form" method="get" data-wf-page-id="673031d2ac02ab42b81c6c6d" data-wf-element-id="93041657-890f-09f2-afb2-b153cc994b27">
-            <div class="w-layout-grid f-account-input-grid"><label id="w-node-_93041657-890f-09f2-afb2-b153cc994b68-b81c6c6d" class="w-checkbox f-checkbox-field-2">
+            <div class="w-layout-grid f-account-input-grid">
+              <label id="w-node-_93041657-890f-09f2-afb2-b153cc994b68-b81c6c6d" class="w-checkbox f-checkbox-field-2">
                 <div class="w-checkbox-input w-checkbox-input--inputType-custom f-checkbox-2"></div><input type="checkbox" name="Checkbox-2" id="Checkbox-2" data-name="Checkbox 2" style="opacity:0;position:absolute;z-index:-1">
                 <div id="w-node-_93041657-890f-09f2-afb2-b153cc994b6a-b81c6c6d" class="f-modal-checkbox-wrapper">
                   <p class="f-paragraph-regular-2 f-text-weight-medium-2">Unclaimed items only</p>
@@ -92,9 +93,8 @@
                   </svg></div>
               </div>
             </div>
-          </label>
+          </form>
         </div>
-      </form>
     </div>
   </section>
 </template>
