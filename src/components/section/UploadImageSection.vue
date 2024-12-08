@@ -1,10 +1,5 @@
 <template>
   <section class="hero-stack-2">
-    <div class="container-4">
-      <div class="hero-wrapper-two-2">
-        <h1 class="heading-6">Item Name</h1>
-      </div>
-    </div>
     <div class="w-layout-blockcontainer container-7 w-container">
       <div class="f-section-large-2">
         <div class="f-container-regular-2">
