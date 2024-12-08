@@ -3,8 +3,8 @@
         <div class="ms-form-block-2 w-form">
         <form id="wf-form-Signup-Form" name="wf-form-Signup-Form" data-name="Signup Form" method="get" data-ms-form="signup" class="ms-form" data-wf-page-id="66f8dbee4594ca1c1fbef796" data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d" aria-label="Signup Form">
             <h2 class="ms-form-heading">Account Details</h2>
-            <h1>Name: [Insert name here]</h1>
-            <h1>Email: [Insert Email here]</h1>
+            <h1 v-if="user!=null">Name: {{user.name}}</h1>
+            <h1 v-if="user!=null">id: {{user.id}}</h1>
             <!-- <div><label for="Email-One-2" class="ms-input-label">Email Address</label><input class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email" id="Email-One-2" data-ms-member="email" required=""></div>
             <div><label for="Password-One-2" class="ms-input-label">Password Input</label><input class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required=""></div> -->
 
@@ -29,7 +29,15 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+const user = ref(null);
 
+onMounted(async()=>{
+    const res = await axios.get("http://localhost:8001/api/user/" + localStorage.getItem("id"));
+    console.log(res.data);
+    user.value = res.data;
+});
 </script>
 
 <style scoped>

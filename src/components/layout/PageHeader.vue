@@ -16,8 +16,8 @@
             <li>
               <router-link class="nav-link2" to="/item-search">Search</router-link>
             </li>
-            <li>
-              <router-link class="auth-btn web" to="/login">SIGN UP / LOG IN</router-link>
+            <li v-if="id">
+              <router-link class="auth-btn web" to="/account-details">{{id}}</router-link>
             </li>
           </ul>
         </nav>
@@ -42,9 +42,12 @@
             <li>
               <router-link class="nav-link2" to="/item-search">Search</router-link>
             </li>
-            <li>
-              <router-link class="auth-btn" to="/login">SIGN UP / LOG IN</router-link>
+            <li v-if="id">
+              <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
             </li>
+            <!-- <li>
+              <button @click="logout">로그아웃</button>
+            </li> -->
         </ul>
       </nav>
     </div>
@@ -52,11 +55,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const isMenuOpen = ref(false);
 const isSearch = ref(false);
+const id = computed(()=>localStorage.getItem('id'));
 const route = useRoute();
 
 const router = useRouter();
@@ -72,6 +76,10 @@ const closeMenu = (event) => {
   }
 };
 
+// function logout(){
+//   localStorage.removeItem("jwtToken");
+//   localStorage.removeItem("id");
+// }
 
 onMounted(() => {
   router.afterEach(() => {

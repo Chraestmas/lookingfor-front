@@ -1,12 +1,18 @@
 <template>
     <section class="section">
         <div class="ms-form-block-2 w-form">
-        <form id="wf-form-Signup-Form" name="wf-form-Signup-Form" data-name="Signup Form" method="get" data-ms-form="signup" class="ms-form" data-wf-page-id="66f8dbee4594ca1c1fbef796" data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d" aria-label="Signup Form">
+        <form @submit.prevent="login" id="wf-form-Signup-Form" name="wf-form-Signup-Form" data-name="Signup Form" method="get" data-ms-form="signup" class="ms-form" data-wf-page-id="66f8dbee4594ca1c1fbef796" data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d" aria-label="Signup Form">
             <h2 class="ms-form-heading">Log in</h2>
-            <div><label for="Email-One-2" class="ms-input-label">Email Address</label><input class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email" id="Email-One-2" data-ms-member="email" required=""></div>
-            <div><label for="Password-One-2" class="ms-input-label">Password Input</label><input class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required=""></div>
             <div>
-            <a href="index.html" class="button-primary w-button">Log in</a>
+                <label for="Email-One-2" class="ms-input-label">Email Address</label>
+                <input @input="(e)=>{email=e.target.value}" class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email" id="Email-One-2" data-ms-member="email" required="">
+            </div>
+            <div>
+                <label for="Password-One-2" class="ms-input-label">Password Input</label>
+                <input @input = "(e)=>{password=e.target.value}" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
+            </div>
+            <div>
+            <button class="button-primary w-button">Log in</button>
             </div>
             <router-link href="/create-account" target="_blank" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
             <div class="ms-button-flex">
@@ -36,6 +42,26 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+
+const email = ref('');
+const password = ref('');
+
+async function login(){
+    try{
+        const response = await axios.post('http://localhost:8001/api/login', { id: email.value, password: password.value });
+        const res = response.data;
+        console.log(response.data);
+        // 로그인 성공 시 토큰을 로컬 스토리지에 저장
+        localStorage.setItem('jwtToken', res.authToken);
+        localStorage.setItem('id', res.id);
+    }catch(e){
+        //로그인 실패
+        console.log(e);
+    }
+
+}
 
 </script>
 
