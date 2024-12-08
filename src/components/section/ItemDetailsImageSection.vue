@@ -24,6 +24,9 @@
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <div class="user-items-list-banner-slideshow__arrow-icon-background
+                            user-items-list-banner-slideshow__arrow-icon-background-area">
+                </div>
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
@@ -282,7 +285,20 @@ img, svg {
     vertical-align: middle;
 }
 
+.user-items-list-banner-slideshow .user-items-list-banner-slideshow__arrow-icon-background {
+    background-color: var(--list-section-banner-slideshow-arrow-background-color);
+}
 
+.user-items-list-banner-slideshow .user-items-list-banner-slideshow__arrow-icon-background-area {
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: .7;
+    transition: opacity .3s;
+}
 
 
 </style>
