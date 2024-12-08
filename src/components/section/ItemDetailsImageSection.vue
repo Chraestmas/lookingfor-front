@@ -6,37 +6,16 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-        <div id="carouselExampleIndicators" 
-        class="carousel slide" 
-        
-        data-bs-ride="carousel">
-=======
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
->>>>>>> 7e7e199864237dd184a063879bfeea955ee2eaf9
             <div class="carousel-indicators">
                 <button v-for="(s,idx) in slides" v-bind:key="idx" 
                     @click="moveTo(idx)"
                 type="button" data-bs-target="#carouselExampleIndicators" :class="{active : currentIndex === idx}"></button>
 
             </div>
-<<<<<<< HEAD
-            <div class="carousel-inner"
-            :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-                <div class="carousel-item ">
-                    <img src="../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png"
-                        class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item ">
-                    <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item ">
-                    <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
-=======
             <div class="carousel-inner" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
                 <div class="carousel-item" v-for="(image, index) in slides" :key="index">
                     <img :src="image" alt="Carousel Image" class="carousel-image" />
->>>>>>> 7e7e199864237dd184a063879bfeea955ee2eaf9
                 </div>
             </div>
             <button @click="moveToPrevSlide" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
