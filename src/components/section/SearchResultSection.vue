@@ -5,7 +5,7 @@
             `http://localhost:8001${item.pictures[0].url}?t=${new Date().getTime()}`" loading="lazy" alt="item image" class="pricing-image">
         <h3>{{item.name}}</h3>
         <p class="pricing-card-text">{{item.categoryName}}<br>{{item.locationName}}<br>Found {{item.foundDate}}<br></p>
-        <RouterLink :to="`/item/${item.id}`" class="text-link-arrow-2 w-inline-block">
+        <RouterLink :to="`/item-details/${item.id}`" class="text-link-arrow-2 w-inline-block">
           <div>Learn more</div>
           <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewbox="0 0 20 20" fill="none"
               xmlns="http://www.w3.org/2000/svg">

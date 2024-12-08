@@ -9,7 +9,7 @@
       <div class="pricing-grid">
         <!-- Category Dropdown -->
         <div class="pricing-card-three">
-          <select  @input="(e)=>{category = e.target.value; updateParent()}">
+          <select :value="category" @input="(e)=>{category = e.target.value; updateParent()}">
             <option value="" >Select Category</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
@@ -18,7 +18,7 @@
 
         <!-- Location Dropdown -->
         <div class="pricing-card-three">
-          <select  @input="(e)=> {location = e.target.value; updateParent()}">
+          <select :value="location"  @input="(e)=> {location = e.target.value; updateParent()}">
             <option value="" >Select Location</option>
             <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
           </select>

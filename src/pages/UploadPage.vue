@@ -13,17 +13,13 @@
 import SearchDetailSection from '@/components/section/UploadDetailSection.vue';
 import SearchImageSection from '@/components/section/UploadImageSection.vue';
 import axios from 'axios';
-import { ref, defineProps, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 // Props로 전달받은 isEdit 상태
-const props = defineProps({
-  isEdit: {
-    type: Boolean,
-    required: true
-  }
-});
+const isEdit = computed(()=>route.params.id ? true : false)
 
 // formData의 초기 상태
 const formData = ref({
@@ -53,10 +49,11 @@ const fetchFormData = async () => {
   try {
     // 서버에서 기존 데이터 가져오는 예시
     // 실제로는 axios나 fetch로 API 호출을 해야 합니다.
-    const response = await axios.get(`http://localhost:8081/api/item/1`); // 예시 URL
+    const response = await axios.get(`http://localhost:8001/api/item/${route.params.id}`); // 예시 URL
 
     // 데이터를 formData에 할당
     formData.value = response.data;
+    console.log(response.data)
   } catch (error) {
     console.error('Error fetching form data:', error);
   }
@@ -89,13 +86,20 @@ const handleSubmit = async () => {
     console.log(key, value);
   });
   try {
-    const response = await axios.post('http://localhost:8001/api/item', formDataToSend, {
-      headers: {
-        'Content-Type': 'multipart/form-data' // 요청 헤더에 멀티파트로 지정
-      }
-    });
+    let url = 'http://localhost:8001/api/item';
+    let response = null;
+    if(isEdit.value === true){
+      url = `http://localhost:8001/api/item/${route.params.id}`
+      response = await axios.put(url, formData.value);
+    }else{
+      response = await axios.post(url, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // 요청 헤더에 멀티파트로 지정
+        }
+      });
+    }
     console.log('Response:', response.data);
-    router.replace(`/item/${response.data.id}`)
+    router.replace(`/item-details/${response.data.id}`)
   } catch (error) {
     console.error('Error uploading data:', error);
   }
@@ -105,7 +109,7 @@ const handleSubmit = async () => {
 
 // 컴포넌트가 마운트될 때 isEdit 상태에 따라 서버에서 데이터를 불러옴
 onMounted(() => {
-  if (props.isEdit) {
+  if (isEdit.value) {
     fetchFormData();
   } 
 });

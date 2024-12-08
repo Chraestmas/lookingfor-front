@@ -16,7 +16,7 @@ const routes = [
     { path: '/create-account', component: CreateAccount},
     { path: '/item-details/:id', component: ItemDetails},
     { path: '/password-recovery', component: PasswordRecovery},
-    { path: '/item/:id', component: ItemDetails},
+    { path: '/item/:id/update', component: UploadPage},
 ]
  
 const router = createRouter({

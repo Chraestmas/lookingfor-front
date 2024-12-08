@@ -2,20 +2,20 @@
     <section class="hero-stack-2">
         <div class="container-4">
             <div class="hero-wrapper-two-2">
-                <h1 class="heading-6">Item Name</h1>
+                <h1 class="heading-6">{{item.name}}</h1>
             </div>
         </div>
 
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button v-for="(s,idx) in slides" v-bind:key="idx" 
+                <button v-for="(s,idx) in slides" v-bind:key="s.id" 
                     @click="moveTo(idx)"
                 type="button" data-bs-target="#carouselExampleIndicators" :class="{active : currentIndex === idx}"></button>
 
             </div>
             <div class="carousel-inner" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-                <div class="carousel-item" v-for="(image, index) in slides" :key="index">
-                    <img :src="image" alt="Carousel Image" class="carousel-image" />
+                <div class="carousel-item" v-for="(image) in slides" :key="image.id">
+                    <img :src="`http://localhost:8001${image.url}`" alt="Carousel Image" class="carousel-image" />
                 </div>
             </div>
             <button @click="moveToPrevSlide" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -35,27 +35,29 @@
         <div class="container-4">
             <div class="pricing-grid">
                 <div id="w-node-c0e1a6ea-5db7-5b33-b0f3-d2d0229e5be0-9fe92ff8" class="pricing-card-three">
-                    <h3>Mobile Device</h3>
+                    <h3>{{ item.categoryName }}</h3>
                     <p class="pricing-card-text">Category<br></p>
                 </div>
                 <div id="w-node-c0e1a6ea-5db7-5b33-b0f3-d2d0229e5bef-9fe92ff8" class="pricing-card-three">
-                    <h3>Secondary Library</h3>
+                    <h3>{{ item.locationName }}</h3>
                     <p class="pricing-card-text">Current Location<br></p>
                 </div>
                 <div id="w-node-c0e1a6ea-5db7-5b33-b0f3-d2d0229e5bfe-9fe92ff8" class="pricing-card-three">
-                    <h3>N/A</h3>
+                    <h3>{{item.nameTag}}</h3>
                     <p class="pricing-card-text">Name Tag</p>
                 </div>
                 <div id="w-node-_2b8cbf2e-f4c0-3618-4877-b0b84973eb2a-9fe92ff8" class="pricing-card-three">
-                    <h3>2/2/2024</h3>
+                    <h3>{{item.foundDate}}</h3>
                     <p class="pricing-card-text">Date Found</p>
                 </div>
                 <div id="w-node-_9b6af973-a9fb-a055-5a09-fea85fe176c3-9fe92ff8" class="pricing-card-three">
-                    <h3>Found By:&nbsp;Jake</h3>
+                    <h3 v-if="item.foundYn === 'Y'" >Found By:&nbsp;{{item.pickupPersonName}}</h3>
+                    <h3 v-else >Not Found</h3>
                     <p class="pricing-card-text">Status &amp;&nbsp;Pickup person name</p>
                 </div>
                 <div id="w-node-e9382a67-ffad-90d1-e2e2-fc794f296439-9fe92ff8" class="pricing-card-three">
-                    <h3>2/3/2024</h3>
+                    <h3 v-if="item.foundYn === 'Y'">{{item.foundDate}}</h3>
+                    <h3 v-else>Not Found</h3>
                     <p class="pricing-card-text">Date Retrieved</p>
                 </div>
             </div>
@@ -66,28 +68,43 @@
         <div class="container-9">
             <div class="hero-wrapper-two-4">
                 <h1>Description</h1>
-                <p class="margin-bottom-24px-5">Slightly cracked screen, jelly case w/ ornaments inside, out of battery
-                    when found</p>
+                <p class="margin-bottom-24px-5">{{item.description}}</p>
             </div>
         </div>
     </section>
 
     <section class="section-2">
         <div class="w-layout-blockcontainer w-container">
-            <a href="/item-search" class="button-primary w-button">edit</a>
+            <RouterLink :to="`/item/${route.params.id}/update`" class="button-primary w-button">edit</RouterLink>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const currentIndex = ref(0); // 현재 슬라이드 인덱스
-const slides = ref([
-  require("../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png"),
-  require("../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"),
-  require("../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"),
-]);
+const slides = computed(()=>item.value.pictures.map(e=>({id : e.id, url : e.url})));
+const route = useRoute();
+
+const item = ref({
+    id : 1,
+    name : '',
+    categoryId : '',
+    categoryName : '',
+    foundDate : '',
+    nameTag : '',
+    locationId :'',
+    locationName :'',
+    foundYn :'',
+    pickupDate :'',
+    pickupPersonName :'',
+    description :'',
+    pictures :[],
+});
+
 const moveTo = (idx) => {
     currentIndex.value = idx; // 첫 번째로 돌아갑니다.
 
@@ -110,6 +127,12 @@ const moveToPrevSlide = () => {
     currentIndex.value = slides.value.length - 1; // 마지막으로 돌아갑니다.
   }
 };
+
+onMounted(async ()=>{
+    const res = await axios.get('http://localhost:8001/api/item/' +  route.params.id)
+    console.log(res.data);
+    item.value = res.data;
+});
 
 
 </script>
