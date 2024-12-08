@@ -8,7 +8,7 @@
 
         <div id="carouselExampleIndicators" 
         class="carousel slide" 
-        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        
         data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -18,7 +18,8 @@
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
             </div>
-            <div class="carousel-inner">
+            <div class="carousel-inner"
+            :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
                 <div class="carousel-item ">
                     <img src="../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png"
                         class="d-block w-100" alt="...">
