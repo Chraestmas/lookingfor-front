@@ -42,8 +42,11 @@
             <li>
               <router-link class="nav-link2" to="/item-search">Search</router-link>
             </li>
-            <li>
+            <!-- <li>
               <router-link class="auth-btn" to="/login">SIGN UP / LOG IN</router-link>
+            </li> -->
+            <li>
+              <router-link class="auth-btn" to="/login">welcome Jaewoo</router-link>
             </li>
         </ul>
       </nav>
