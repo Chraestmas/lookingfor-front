@@ -6,18 +6,21 @@
             </div>
         </div>
 
+<<<<<<< HEAD
         <div id="carouselExampleIndicators" 
         class="carousel slide" 
         
         data-bs-ride="carousel">
+=======
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+>>>>>>> 7e7e199864237dd184a063879bfeea955ee2eaf9
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+                <button v-for="(s,idx) in slides" v-bind:key="idx" 
+                    @click="moveTo(idx)"
+                type="button" data-bs-target="#carouselExampleIndicators" :class="{active : currentIndex === idx}"></button>
+
             </div>
+<<<<<<< HEAD
             <div class="carousel-inner"
             :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
                 <div class="carousel-item ">
@@ -29,6 +32,11 @@
                 </div>
                 <div class="carousel-item ">
                     <img src="../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png" class="d-block w-100" alt="...">
+=======
+            <div class="carousel-inner" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+                <div class="carousel-item" v-for="(image, index) in slides" :key="index">
+                    <img :src="image" alt="Carousel Image" class="carousel-image" />
+>>>>>>> 7e7e199864237dd184a063879bfeea955ee2eaf9
                 </div>
             </div>
             <button @click="moveToPrevSlide" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -97,11 +105,14 @@ import { ref } from 'vue';
 
 const currentIndex = ref(0); // 현재 슬라이드 인덱스
 const slides = ref([
-  "../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png",
-  "../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png",
-  "../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"
+  require("../../assets/dark-background-abstract-background-network-3d-background-3840x2160-8324-p-500.png"),
+  require("../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"),
+  require("../../assets/Screenshot-2024-10-27-at-3.05.48-PM.png"),
 ]);
+const moveTo = (idx) => {
+    currentIndex.value = idx; // 첫 번째로 돌아갑니다.
 
+};
 
 const moveToNextSlide = () => {
     console.log(currentIndex.value)
@@ -126,19 +137,21 @@ const moveToPrevSlide = () => {
 
 <style scoped>
 .carousel {
-    width: 900px;
+    max-width: 900px;
     height: 400px;
     margin: 50px auto 25px auto;
-    /* overflow: hidden; */
+    overflow: hidden;
+    
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bd-example> :last-child {
     margin-bottom: 0;
 }
 
-.carousel {
-    position: relative;
-}
+
 
 .carousel-indicators {
     position: absolute;
@@ -195,31 +208,43 @@ button {
 button {
     -webkit-appearance: button;
 }
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
 
 .carousel-inner {
-    position: relative;
-    width: fit-content;
-    height: 100%;
-    display: flex;
-    /* overflow: hidden; */
-    transition: transform 0.5s ease-in-out; /* 부드러운 전환 */
+  display: flex;
+  transition: transform 0.5s ease-in-out;
 }
 
 .carousel-item {
-    position: relative;
-    /* display: none; */
-    /* float: left; */
-    flex-shrink: 0;
-    width: 900px;
-    height: 400px;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transition: transform .6s ease-in-out;
+  min-width: 100%;
+  box-sizing: border-box;
 }
-.carousel-item img{
-    width: 100%;
-    height: 100%;
-     object-fit: cover;
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 이미지 비율 유지하면서 모두 보이게 */
+}
+
+/* 고정된 크기 */
+.carousel-item {
+  height: 300px; /* 슬라이드의 고정된 높이 */
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
 }
 .carousel-item-next,
 .carousel-item-prev,
@@ -317,6 +342,10 @@ button {
     clip: rect(0, 0, 0, 0) !important;
     white-space: nowrap !important;
     border: 0 !important;
+}
+
+.carousel-indicators .active{
+    opacity: 1;
 }
 
 @media (min-width: 1200px) {

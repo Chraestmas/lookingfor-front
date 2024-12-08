@@ -14,7 +14,7 @@ const routes = [
     { path: '/item-search', component: SearchPage},
     { path: '/login', component: LoginPage},
     { path: '/create-account', component: CreateAccount},
-    { path: '/item-details', component: ItemDetails},
+    { path: '/item-details/:id', component: ItemDetails},
     { path: '/password-recovery', component: PasswordRecovery},
     { path: '/item/:id', component: ItemDetails},
 ]

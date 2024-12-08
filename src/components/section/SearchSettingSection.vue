@@ -1,7 +1,6 @@
 <template>
   <!-- <h1>재우님 페이지</h1> -->
-  <section class="gallery-scroll-2">
-    <div class="container-3">
+
       <h1 class="heading-7">Search Items</h1>
       <a href="#" class="button-primary w-button">Search Settings V</a>
       <div class="f-modal-base-large dropdown">
@@ -48,12 +47,7 @@
                 </div>
               </label></div>
           </form>
-          <div class="f-success-message w-form-done">
-            <div>Thank you! Your submission has been received!</div>
-          </div>
-          <div class="w-form-fail">
-            <div>Oops! Something went wrong while submitting the form.</div>
-          </div>
+          
         </div>
         <div class="f-line-regular"></div>
         <div class="f-modal-title-wrapper">
@@ -70,12 +64,7 @@
                 </div>
               </label></div>
           </form>
-          <div class="f-success-message w-form-done">
-            <div>Thank you! Your submission has been received!</div>
-          </div>
-          <div class="w-form-fail">
-            <div>Oops! Something went wrong while submitting the form.</div>
-          </div>
+          
         </div>
         <div class="f-modal-wrapper-right">
           <a href="#" class="f-button-secondary-3 w-button">Cancel</a>
@@ -96,8 +85,7 @@
           </form>
         </div>
       </div>
-    </div>
-  </section>
+
 </template>
 
 <script setup>
