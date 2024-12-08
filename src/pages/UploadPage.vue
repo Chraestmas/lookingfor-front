@@ -3,7 +3,7 @@
   <SearchDetailSection @update-form="handleFormUpdate" :initialData="formData" />
   <section class="section-2">
     <div class="w-layout-blockcontainer w-container">
-      <button class="button-primary w-button">{{isEdit ? "edit" : "create"}}</button>
+      <button @click="handleSubmit" class="button-primary w-button">{{isEdit ? "edit" : "create"}}</button>
     </div>
   </section>
 </template>
@@ -14,6 +14,9 @@ import SearchDetailSection from '@/components/section/UploadDetailSection.vue';
 import SearchImageSection from '@/components/section/UploadImageSection.vue';
 import axios from 'axios';
 import { ref, defineProps, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 // Props로 전달받은 isEdit 상태
 const props = defineProps({
   isEdit: {
@@ -32,7 +35,7 @@ const formData = ref({
 	nameTag:'',
 	locationId:'',
 	locationName:'',
-	foundYn:'',
+	foundYn:'N',
 	pickupDate:'',
 	pickupPersonName:'',
 	description:'',
@@ -62,8 +65,43 @@ const fetchFormData = async () => {
 // Form 데이터 업데이트 (SearchDetailSection에서 발생하는 이벤트 처리)
 const handleFormUpdate = (data) => {
   formData.value = data;
-  console.log('Form Data:', formData.value);
+  console.log(formData.value)
 };
+
+const handleSubmit = async () => {
+  const formDataToSend = new FormData();
+  
+  // 이미지 파일들을 FormData에 추가
+  if(imagesToUpload.value == null || imagesToUpload.value.length===0){
+    formDataToSend.append('photos', []);
+
+  }else{
+    imagesToUpload.value.forEach(file => {
+      formDataToSend.append('photos', file);
+    });
+  }
+
+  // JSON 데이터를 FormData에 추가
+  formDataToSend.append('formData', JSON.stringify(formData.value)); // 'formData'도 파라미터명입니다.
+  
+  //formdata 잘 되어있는지 조회
+  formDataToSend.forEach((value, key) => {
+    console.log(key, value);
+  });
+  try {
+    const response = await axios.post('http://localhost:8001/api/item', formDataToSend, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // 요청 헤더에 멀티파트로 지정
+      }
+    });
+    console.log('Response:', response.data);
+    router.replace(`/item/${response.data.id}`)
+  } catch (error) {
+    console.error('Error uploading data:', error);
+  }
+};
+
+
 
 // 컴포넌트가 마운트될 때 isEdit 상태에 따라 서버에서 데이터를 불러옴
 onMounted(() => {
