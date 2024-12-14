@@ -4,8 +4,8 @@
       <form id="wf-form-Signup-Form" name="wf-form-Signup-Form" data-name="Signup Form" method="get"
         data-ms-form="signup" class="ms-form" data-wf-page-id="67024f5715ea5801d54d451b"
         data-wf-element-id="161577da-0503-27e0-1e28-773f52117a3d" @submit.prevent="submitFormData">
-        <h2 class="ms-form-heading">Edit Account</h2>
-        <div class="box"><label for="Email-One-2" class="ms-input-label">New Email Address</label>
+        <h2 class="ms-form-heading">Password Recovery</h2>
+        <div class="box"><label for="Email-One-2" class="ms-input-label">Email Address</label>
           <input :disabled="codePopupOpen" :readonly="isChecked" @input="onEmailInput" class="ms-input w-input"
             maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email"
             id="Email-One-2" data-ms-member="email" required="">
@@ -14,12 +14,14 @@
           <input @input="onPasswordInput"
             class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2"
             placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
+            <div class="ms-help-text">Password must contain 8+ characters and a capital letter</div>
         </div>
         <div v-if="isChecked" class="box"><label for="Password-One-3" class="ms-input-label">Confirm New
             Password:</label>
             <input @input="onPasswordCheckInput" class="ms-input w-input" maxlength="256" name="Password-One-2"
             data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2"
             data-ms-member="password" required="">
+            <div class="ms-help-text">Password must contain 8+ characters and a capital letter</div>
         </div>
         <div>
           <button v-if="isChecked" style="cursor: pointer;" class="button-primary w-button">Update Account</button>
@@ -134,7 +136,7 @@ async function submitFormData() {
       // email로 코드보내기가 실패하면
       //실패 처리
       console.log(e);
-      alert("인증 번호를 발송할 수 없습니다.");
+      alert("Cannot send verification code.");
     }
 
   } else { 

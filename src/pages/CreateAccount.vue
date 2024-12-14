@@ -70,12 +70,12 @@ async function handleSubmit(){
   try{
     const res = await axios.post("http://localhost:8001/api/user", {id:email.value, name:userName.value, password:password.value })
     if(res.data === null){
-      alert('생성할 수 없습니다!');
+      alert('Cannot create account at the moment.');
       return;
     }
-    alert(res.data.id + '계정이 생성되었습니다!');
+    alert(res.data.id + 'Your account has been created!');
   }catch(e){
-    alert('server 문제 발생');
+    alert('Server error: please try again later.');
   }
 }
 
