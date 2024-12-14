@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="navbar-overlay" :class="{ 'active': isMenuOpen }">
+    <div class="navbar-overlay mobile" :class="{ 'active': isMenuOpen }">
       <nav class="menu">
         <ul class="mobile-menu">
           <li>
@@ -225,6 +225,9 @@ nav {
   display: none;
   padding: 12px;
 }
+.navbar-overlay.mobile{
+    display: none;
+  }
 
 @media screen and (max-width: 767px) {
   .mobile-menu {
@@ -249,6 +252,9 @@ nav {
   }
 
   .navbar-overlay {
+    display: block;
+  }
+  .navbar-overlay.mobile{
     display: block;
   }
 }

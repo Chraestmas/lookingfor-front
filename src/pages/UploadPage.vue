@@ -1,9 +1,9 @@
 <template>
   <SearchImageSection @upload-image="handleImageUpload"/>
-  <SearchDetailSection @update-form="handleFormUpdate" :initialData="formData" />
+  <SearchDetailSection :isEdit="isEdit" @update-form="handleFormUpdate" :initialData="formData" />
   <section class="section-2">
     <div class="w-layout-blockcontainer w-container">
-      <button @click="handleSubmit" class="button-primary w-button">{{isEdit ? "edit" : "create"}}</button>
+      <button @click="handleSubmit" class="button-primary w-button">{{isEdit ? "save" : "create"}}</button>
     </div>
   </section>
 </template>
