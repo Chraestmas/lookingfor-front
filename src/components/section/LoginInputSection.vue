@@ -16,7 +16,7 @@
             <div>
             <button class="button-primary w-button">Log in</button>
             </div>
-            <router-link href="/create-account" target="_blank" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
+            <router-link to="/create-account" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
             <div class="ms-button-flex">
                 <div>Don't have an account?</div>
                 <div class="ms-button-svg w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
@@ -24,7 +24,7 @@
                 </svg></div>
             </div>
             </router-link>
-            <router-link to="/password-recovery" target="_blank" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
+            <router-link to="/password-recovery" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
             <div class="ms-button-flex">
                 <div>Forgot Password?</div>
                 <div class="ms-button-svg w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
