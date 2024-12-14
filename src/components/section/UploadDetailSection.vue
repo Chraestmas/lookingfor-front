@@ -1,5 +1,4 @@
 <template>
-  <div class="features-block"></div>
   <section class="features-metrics">
     <div class="container-name">
       <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
@@ -35,10 +34,10 @@
           <p class="pricing-card-text">Date Found</p>
         </div>
         <div class="pricing-card-three">
-          <input type="text" v-model="pickupPersonName" @input="updateParent" placeholder="Enter Pickup Person Name" />
+          <input :disabled="!isEdit" type="text" v-model="pickupPersonName" @input="updateParent" placeholder="Enter Pickup Person Name" />
           <div class="f-toggle-wrap-2">
             <label class="toggle-container">
-              <input type="checkbox" name="isFound" v-model="isFound" @input="(e)=>{ isFound = e.target.checked; updateParent()}" />
+              <input :disabled="!isEdit" type="checkbox" name="isFound" v-model="isFound" @input="(e)=>{ isFound = e.target.checked; updateParent()}" />
               <span class="slider"></span>
             </label>
             <div>Found?</div>
@@ -47,7 +46,7 @@
         </div>
 
         <div class="pricing-card-three">
-          <input type="date" v-model="dateRetrieved" @input="updateParent" />
+          <input :disabled="!isEdit" type="date" v-model="dateRetrieved" @input="updateParent" />
           <p class="pricing-card-text">Date Retrieved</p>
         </div>
       </div>
@@ -73,6 +72,9 @@ const props = defineProps({
   initialData: {
     type: Object,
     required: true
+  },
+  isEdit:{
+    type:Boolean
   }
 });
 
@@ -140,6 +142,9 @@ watch(() => props.initialData, (newData) => {
 </script>
 
 <style scoped>
+.pricing-grid {
+  margin-bottom: 0;
+}
 #desc-h1 {
   font-size: 38px;
   line-height: 44px;
@@ -267,7 +272,12 @@ input:checked + .slider {
         max-width: 940px;
         margin: 0 auto;
     }
-
+    .features-metrics{
+      padding-bottom: 10px;
+    }
+.hero-without-image-2{
+  padding-top: 20px;
+}
 @media screen and (max-width: 991px) {
     .pricing-grid {
       grid-template-columns: 1fr 1fr;

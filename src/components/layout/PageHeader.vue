@@ -19,6 +19,9 @@
             <li v-if="id">
               <router-link class="auth-btn web" to="/account-details">{{id}}</router-link>
             </li>
+            <li v-if="id">
+              <button class="logout-btn" to="/account-details">logout</button>
+            </li>
           </ul>
         </nav>
         <div class="menu-icon" @click="toggleMenu">
@@ -30,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="navbar-overlay" :class="{ 'active': isMenuOpen }">
+    <div class="navbar-overlay mobile" :class="{ 'active': isMenuOpen }">
       <nav class="menu">
         <ul class="mobile-menu">
           <li>
@@ -45,9 +48,9 @@
             <li v-if="id">
               <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
             </li>
-            <!-- <li>
-              <button @click="logout">로그아웃</button>
-            </li> -->
+            <li v-if="id">
+              <button class="logout-btn" to="/account-details">logout</button>
+            </li>
         </ul>
       </nav>
     </div>
@@ -225,6 +228,15 @@ nav {
   display: none;
   padding: 12px;
 }
+.navbar-overlay.mobile{
+    display: none;
+  }
+
+  .logout-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
 @media screen and (max-width: 767px) {
   .mobile-menu {
@@ -249,6 +261,9 @@ nav {
   }
 
   .navbar-overlay {
+    display: block;
+  }
+  .navbar-overlay.mobile{
     display: block;
   }
 }

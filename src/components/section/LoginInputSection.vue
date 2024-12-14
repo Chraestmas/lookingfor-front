@@ -5,14 +5,16 @@
             <h2 class="ms-form-heading">Log in</h2>
             <div>
                 <label for="Email-One-2" class="ms-input-label">Email Address</label>
-                <input @input="(e)=>{email=e.target.value}" class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email" id="Email-One-2" data-ms-member="email" required="">
+                <input @input="(e)=>{email=e.target.value}" class="ms-input w-input" maxlength="256" name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" id="Email-One-2" data-ms-member="email">
+                <p class="errMsg">{{ emailErrMsg  }}</p>
             </div>
             <div>
-                <label for="Password-One-2" class="ms-input-label">Password</label>
-                <input @input = "(e)=>{password=e.target.value}" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
+                <label for="Password-One-2" class="ms-input-label">Password Input</label>
+                <input @input = "(e)=>{password=e.target.value}" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password">
+                <p class="errMsg">{{ passwordErrMsg  }}</p>
             </div>
             <div>
-            <button class="button-primary w-button">Log in</button>
+            <button class="button-primary w-button login-btn">Log in</button>
             </div>
             <router-link to="/create-account" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
             <div class="ms-button-flex">
@@ -47,8 +49,38 @@ import { ref } from 'vue';
 
 const email = ref('');
 const password = ref('');
+const emailErrMsg = ref('');
+const passwordErrMsg = ref('');
+
+function validateEmail (){
+    const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+    if(email.value ==''){
+        emailErrMsg.value = 'email은 필수 입력 값입니다.'
+    }else if(!emailPattern.test(email.value)){
+        emailErrMsg.value = 'email 형식이 아닙니다.'
+    }else{
+        emailErrMsg.value = ''
+    }
+}
+function validatePassword (){
+    const passwordPattern = /^(?=.*[A-Z]).+$/;
+    if(password.value ==''){
+        passwordErrMsg.value = 'password는 필수 입력 값입니다.'
+    }else if(password.value.length < 8){
+        passwordErrMsg.value = '비밀번호는 8글자 이상으로 입력하세요'
+    }else if(!passwordPattern.test(password.value)){
+        passwordErrMsg.value = '비밀번호는 적어도 1개 이상의 대문자가 포함되어야합니다.'
+    }else{
+        passwordErrMsg.value = ''
+    }
+}
 
 async function login(){
+    validateEmail();
+    validatePassword();
+    if(emailErrMsg.value != '' || passwordErrMsg.value != ''){
+        return;
+    }
     try{
         const response = await axios.post('http://localhost:8001/api/login', { id: email.value, password: password.value });
         const res = response.data;
@@ -59,6 +91,7 @@ async function login(){
     }catch(e){
         //로그인 실패
         console.log(e);
+        alert('아이디 또는 비밀번호를 확인하세요')
     }
 
 }
@@ -198,7 +231,11 @@ input {
     -webkit-user-select: text;
     cursor: auto;
 }
-
+.login-btn{
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
 input, textarea, select, button {
     margin-top: 0em;
     margin-right: 0em;
@@ -215,6 +252,9 @@ input, textarea, select, button {
     text-align: start;
 }
 
-
+.errMsg{
+    color: red;
+    margin-bottom: 15px;
+}
 
 </style>
