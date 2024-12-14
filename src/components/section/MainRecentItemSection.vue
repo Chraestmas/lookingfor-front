@@ -4,22 +4,16 @@
       <h2 class="centered-heading-4">Recently Found Items</h2>
       <div class="pricing-grid">
         <div v-for="item in items" v-bind:key="item.id" id="w-node-a20b9ec8-b7c6-c966-54ff-098afd2bff9b-1fb8dede" class="pricing-card-three">
+          <RouterLink :to="`/item-details/${item.id}`"
+          class="text-link-arrow-2 w-inline-block">
           <img
             :src="item.pictures == null || item.pictures.length ==0 ? `https://cdn.prod.website-files.com/66f8d5504594ca1c1fb8ded5/671dd8500f7c9d454b070281_Screenshot%202024-10-27%20at%203.05.48%E2%80%AFPM.png` : 
             `http://localhost:8001${item.pictures[0].url}?t=${new Date().getTime()}`"
             loading="lazy" alt="" class="pricing-image">
+          </RouterLink>
           <h3>{{item.name}}</h3>
           <p class="pricing-card-text">{{item.categoryName}}<br>{{item.locationName}}<br>Found {{item.foundDate}}<br></p>
-          <RouterLink :to="`/item-details/${item.id}`"
-            class="text-link-arrow-2 w-inline-block">
-            <div>Learn more</div>
-            <div class="arrow-embed-2 w-embed"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M11.72 15L16.3472 10.357C16.7732 9.92932 16.7732 9.23603 16.3472 8.80962L11.72 4.16667L10.1776 5.71508L12.9425 8.4889H4.16669V10.6774H12.9425L10.1776 13.4522L11.72 15Z"
-                  fill="currentColor"></path>
-              </svg></div>
-          </RouterLink>
+            
         </div>
       </div>
     </div>

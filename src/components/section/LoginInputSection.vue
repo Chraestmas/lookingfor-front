@@ -14,7 +14,7 @@
                 <p class="errMsg">{{ passwordErrMsg  }}</p>
             </div>
             <div>
-            <button class="button-primary w-button">Log in</button>
+            <button class="button-primary w-button login-btn">Log in</button>
             </div>
             <router-link to="/create-account" class="ms-button ms-is-light ms-is-small ms-is-documentation w-inline-block">
             <div class="ms-button-flex">
@@ -231,7 +231,11 @@ input {
     -webkit-user-select: text;
     cursor: auto;
 }
-
+.login-btn{
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
 input, textarea, select, button {
     margin-top: 0em;
     margin-right: 0em;

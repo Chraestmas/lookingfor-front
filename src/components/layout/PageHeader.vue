@@ -19,6 +19,9 @@
             <li v-if="id">
               <router-link class="auth-btn web" to="/account-details">{{id}}</router-link>
             </li>
+            <li v-if="id">
+              <button class="logout-btn" to="/account-details">logout</button>
+            </li>
           </ul>
         </nav>
         <div class="menu-icon" @click="toggleMenu">
@@ -45,9 +48,9 @@
             <li v-if="id">
               <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
             </li>
-            <!-- <li>
-              <button @click="logout">로그아웃</button>
-            </li> -->
+            <li v-if="id">
+              <button class="logout-btn" to="/account-details">logout</button>
+            </li>
         </ul>
       </nav>
     </div>
@@ -227,6 +230,12 @@ nav {
 }
 .navbar-overlay.mobile{
     display: none;
+  }
+
+  .logout-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
 @media screen and (max-width: 767px) {
