@@ -2,7 +2,13 @@
   <!-- <h1>재우님 페이지</h1> -->
 
   <h1 class="heading-7">Search Items</h1>
-  <button @click="changeModalStatus" style="cursor: pointer;" class="button-primary w-button">Search Settings V</button>
+  <button @click="changeModalStatus" style="cursor: pointer;" class="button-primary w-button">Search Settings 
+    <span class="arrow-box" :class="{arrow : isModalOpen}">
+      <svg width="12px" height="12px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
   <div v-if="isModalOpen" class="f-modal-base-large dropdown">
     <div class="f-modal-title-wrapper">
       <div class="f-sub-heading-regular">Categories</div>
@@ -43,6 +49,7 @@
     </div>
     <div class="f-modal-wrapper-right">
       <button @click="cancelChanges" style="cursor: pointer;" class="f-button-secondary-3 w-button">Cancel</button>
+      <button @click="resetChanges" style="cursor: pointer;" class="f-button-secondary-3 w-button">Reset</button>
       <button @click="saveChanges" style="cursor: pointer;" class="f-button-primary w-button">Save</button>
     </div>
   </div>
@@ -58,10 +65,10 @@
                   d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
               </svg>
             </div>
-            <input @input="(e) => itemName = e.target.value" class="f-field-input-icon w-input" maxlength="256"
+            <input :value="itemName" @input="(e) => itemName = e.target.value" class="f-field-input-icon w-input" maxlength="256"
               name="Input-Field-Icon-L" data-name="Input Field Icon L" placeholder="Search Items" type="text"
               id="Input-Field-Icon-L">
-            <button @click="onItemNameSearch" class="button w-button">Search</button>
+            <button @click="onItemNameSearch" class="button w-button search-btn">Search</button>
           </div>
         </div>
       </div>
@@ -111,6 +118,14 @@ function cancelChanges() {
 
 }
 
+function resetChanges(){
+  selectedCategories.value = [];
+  unclaimedOnly.value = false;
+  itemName.value = '';
+  isModalOpen.value = false;
+  emit('update-filter', { categoryId: selectedCategories.value, foundYn: unclaimedOnly.value, itemName: itemName.value });
+}
+
 function saveChanges() {
   // Save 버튼을 눌렀을 때 변경된 체크박스를 기반으로 API 요청
   isModalOpen.value = false;
@@ -153,5 +168,25 @@ input[type="checkbox"]:checked+.w-checkbox-input {
   background-image: url(https://d3e54v103j8qbb.cloudfront.net/static/custom-checkbox-checkmark.589d534424.svg);
   background-position: 50%;
   background-repeat: no-repeat;
+}
+
+.arrow svg{
+  transform: scale(1, -1);
+}
+
+.arrow-box svg{
+  
+  transition: 0.3s;
+}
+
+.gallery-sticky-2{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.search-btn{
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 </style>

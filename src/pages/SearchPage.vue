@@ -11,12 +11,7 @@
             <RouterLink to="#" @click="changePage(1)" class="f-breadcrumb-link-2 w-inline-block">
               <div>&lt;&lt;</div>
             </RouterLink>
-            <div class="f-breadcrumb-seperator-2 w-embed"><svg width="32" height="32" viewbox="0 0 32 32" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.9766 16.0001L12.8516 11.8751L14.0299 10.6968L19.3332 16.0001L14.0299 21.3034L12.8516 20.1251L16.9766 16.0001Z"
-                  fill="currentColor"></path>
-              </svg></div>
+            <div class="f-breadcrumb-seperator-2 w-embed"></div>
           </div>
           <div style="display: contents;" v-if="currentPage > 1">
 
@@ -24,12 +19,7 @@
             <RouterLink to="#" @click="changePage(currentPage - 1)" class="f-breadcrumb-link-2 w-inline-block">
               <div>&lt;</div>
             </RouterLink>
-            <div class="f-breadcrumb-seperator-2 w-embed"><svg width="32" height="32" viewbox="0 0 32 32" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.9766 16.0001L12.8516 11.8751L14.0299 10.6968L19.3332 16.0001L14.0299 21.3034L12.8516 20.1251L16.9766 16.0001Z"
-                  fill="currentColor"></path>
-              </svg>
+            <div class="f-breadcrumb-seperator-2 w-embed">
             </div>
           </div>
           <div v-for="page in totalPages" style="display: contents;" :key="page">
@@ -37,31 +27,16 @@
               @click="changePage(page)" class="f-breadcrumb-link-2 w-inline-block">
               <div>{{ page }}</div>
             </RouterLink>
-            <div v-if="page !== totalPages" class="f-breadcrumb-seperator-2 w-embed"><svg width="32" height="32"
-                viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.9766 16.0001L12.8516 11.8751L14.0299 10.6968L19.3332 16.0001L14.0299 21.3034L12.8516 20.1251L16.9766 16.0001Z"
-                  fill="currentColor"></path>
-              </svg></div>
+            <div v-if="page !== totalPages" class="f-breadcrumb-seperator-2 w-embed"></div>
           </div>
           <div v-if="currentPage < totalPages" style="display: contents;">
-            <div class="f-breadcrumb-seperator-2 w-embed"><svg width="32" height="32" viewbox="0 0 32 32" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.9766 16.0001L12.8516 11.8751L14.0299 10.6968L19.3332 16.0001L14.0299 21.3034L12.8516 20.1251L16.9766 16.0001Z"
-                  fill="currentColor"></path>
-              </svg></div>
+            <div class="f-breadcrumb-seperator-2 w-embed"></div>
             <RouterLink to="#" @click="changePage(currentPage + 1)" class="f-breadcrumb-link-2 w-inline-block">
               <div>&gt;</div>
             </RouterLink>
           </div>
           <div v-if="currentPage < totalPages" style="display: contents;">
-            <div class="f-breadcrumb-seperator-2 w-embed"><svg width="32" height="32" viewbox="0 0 32 32" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.9766 16.0001L12.8516 11.8751L14.0299 10.6968L19.3332 16.0001L14.0299 21.3034L12.8516 20.1251L16.9766 16.0001Z"
-                  fill="currentColor"></path>
-              </svg></div>
+            <div class="f-breadcrumb-seperator-2 w-embed"></div>
             <RouterLink to="#" @click="changePage(totalPages)" class="f-breadcrumb-link-2 w-inline-block">
               <div>&gt;&gt;</div>
             </RouterLink>

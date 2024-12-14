@@ -40,7 +40,7 @@
               <router-link class="nav-link2" to="/upload-item">Upload</router-link>
             </li>
             <li>
-              <router-link class="nav-link2" to="/item-search">Search</router-link>
+              <router-link @click="reloadPage('/item-search')" class="nav-link2" :to="`/item-search`">Search</router-link>
             </li>
             <li v-if="id">
               <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
@@ -100,7 +100,11 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', closeMenu);
 });
-
+const reloadPage = (targetRoute) => {
+  if (route.path === targetRoute) {
+    window.location.reload(); // This will reload the entire page
+  }
+};
 </script>
 
 <style scoped>

@@ -23,8 +23,10 @@
         </div>
       </div>
     </div>
-    <div class="w-layout-blockcontainer container-10 w-container"><a href="#" class="button-primary-9 w-button">search
-        More Items</a></div>
+    <div class="w-layout-blockcontainer container-10 w-container">
+      <RouterLink to="/item-search" class="button-primary-9 w-button">search
+        More Items</RouterLink>
+    </div>
   </section>
   <div class="waves---section-medium-2"></div>
 </template>
