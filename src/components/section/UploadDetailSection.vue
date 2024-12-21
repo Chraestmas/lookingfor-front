@@ -95,7 +95,7 @@ const dateFoundErrMsg = ref('');
 
 function validateCategory (){
     if(categories.value == ''){
-        categoryErrMsg.value = 'Email is required.'
+        categoryErrMsg.value = 'required.'
     }else{
         categoryErrMsg.value = ''
     }
@@ -103,7 +103,7 @@ function validateCategory (){
 
 function validateLocation (){
     if(locations.value == ''){
-        locationErrMsg.value = 'Email is required.'
+        locationErrMsg.value = 'required.'
     }else{
         locationErrMsg.value = ''
     }
