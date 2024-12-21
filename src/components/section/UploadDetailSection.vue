@@ -1,39 +1,45 @@
 <template>
   <section class="features-metrics">
     <div class="container-name">
-      <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
       <p class="pricing-card-text" style="text-align: center;">Item Name</p>
+      <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
+      
     </div>
     <div class="container-4">
       <div class="pricing-grid">
         <!-- Category Dropdown -->
         <div class="pricing-card-three">
+          <p class="pricing-card-text">Category</p>
           <select :value="category" @input="(e)=>{category = e.target.value; updateParent()}">
             <option value="" >Select Category</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
-          <p class="pricing-card-text">Category</p>
+          
         </div>
 
         <!-- Location Dropdown -->
         <div class="pricing-card-three">
+          <p class="pricing-card-text">Current Location</p>
           <select :value="location"  @input="(e)=> {location = e.target.value; updateParent()}">
             <option value="" >Select Location</option>
             <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
           </select>
-          <p class="pricing-card-text">Current Location</p>
+          
         </div>
 
         <!-- Other fields as is -->
         <div class="pricing-card-three">
-          <input type="text" v-model="nameTag" @input="updateParent" placeholder="Enter Name Tag" />
           <p class="pricing-card-text">Name Tag</p>
+          <input type="text" v-model="nameTag" @input="updateParent" placeholder="Enter Name Tag" />
+          
         </div>
         <div class="pricing-card-three">
-          <input type="date" v-model="dateFound" @input="updateParent" />
           <p class="pricing-card-text">Date Found</p>
+          <input type="date" v-model="dateFound" @input="updateParent" />
+          
         </div>
         <div class="pricing-card-three">
+          <p class="pricing-card-text">Status & Pickup Person Name</p>
           <input :disabled="!isEdit" type="text" v-model="pickupPersonName" @input="updateParent" placeholder="Enter Pickup Person Name" />
           <div class="f-toggle-wrap-2">
             <label class="toggle-container">
@@ -42,12 +48,13 @@
             </label>
             <div>Found?</div>
           </div>
-          <p class="pricing-card-text">Status & Pickup Person Name</p>
+          
         </div>
 
         <div class="pricing-card-three">
-          <input :disabled="!isEdit" type="date" v-model="dateRetrieved" @input="updateParent" />
           <p class="pricing-card-text">Date Retrieved</p>
+          <input :disabled="!isEdit" type="date" v-model="dateRetrieved" @input="updateParent" />
+          
         </div>
       </div>
     </div>

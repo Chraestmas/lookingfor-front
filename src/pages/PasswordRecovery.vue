@@ -14,14 +14,14 @@
           <input @input="onPasswordInput"
             class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2"
             placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
-            <div class="ms-help-text">Password must contain 8+ characters and a capital letter</div>
+            <p class="errMsg">{{ passwordErrMsg  }}</p>
         </div>
         <div v-if="isChecked" class="box"><label for="Password-One-3" class="ms-input-label">Confirm New
             Password:</label>
             <input @input="onPasswordCheckInput" class="ms-input w-input" maxlength="256" name="Password-One-2"
             data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2"
             data-ms-member="password" required="">
-            <div class="ms-help-text">Password must contain 8+ characters and a capital letter</div>
+            <p class="errMsg">{{ passwordErrMsg  }}</p>
         </div>
         <div>
           <button v-if="isChecked" style="cursor: pointer;" class="button-primary w-button">Update Account</button>
@@ -80,11 +80,11 @@ const email = ref('');
 const code = ref('');
 const password = ref('');
 const passwordCheck = ref('');
+const passwordErrMsg = ref('');
 
 function onEmailInput(e) {
   email.value = e.target.value;
 }
-
 function onCodeInput(e) {
   code.value = e.target.value;
 }
@@ -95,9 +95,6 @@ function onPasswordCheckInput(e) {
   passwordCheck.value = e.target.value;
 }
 
-
-
-
 function openCodePopup() {
   codePopupOpen.value = true;
   document.body.style.overflow = 'hidden';
@@ -107,6 +104,7 @@ function closeCodePopup() {
   codePopupOpen.value = false;
   document.body.style.overflow = 'auto';
 }
+
 async function submitCodeData() {
   // 서버로 인증 코드 보내기
   // 인증 코드 보내기 성공하면
@@ -117,13 +115,26 @@ async function submitCodeData() {
     alert(res.data);
   }catch(e){
     //인증코드가 잘못되었다면
-    alert('Invalid code');
+    alert('Invalid code.');
   }
 
 }
 
+function validatePassword (){
+    const passwordPattern = /^(?=.*[A-Z]).+$/;
+    if(password.value ==''){
+        passwordErrMsg.value = 'Password is required.'
+    }else if(password.value.length < 8){
+        passwordErrMsg.value = 'Password must be 8+ characters.'
+    }else if(!passwordPattern.test(password.value)){
+        passwordErrMsg.value = 'Password needs to contain at least 1 capital letter.'
+    }else{
+        passwordErrMsg.value = ''
+    }
+}
 
 async function submitFormData() {
+  validatePassword();
   if (!isChecked.value) { // 코드 보내기
     // email로 코드보내기 api 요청
     //email로 코드 보내기가 성공하면
@@ -142,9 +153,11 @@ async function submitFormData() {
   } else { 
     // 비밀번호와 비밀번호 확인 일치하는지 확인
     if(password.value !== passwordCheck.value){
-      alert("password does not match!");
+      alert("Password does not match!");
       password.value = '';
       passwordCheck.value = '';
+      return;
+    } else if(passwordErrMsg.value != ''){
       return;
     }
 
@@ -156,11 +169,8 @@ async function submitFormData() {
     }catch(e){
       // 실패하면
       console.log(e);
-      alert('Failed to reset password');
+      alert('Failed to reset password.');
     }
-
-
-
   }
 }
 
@@ -194,5 +204,9 @@ async function submitFormData() {
 .button-primary[disabled] {
   color: #fff;
   background-color: #32343a;
+}
+
+.ms-input .w-input{
+  margin-bottom: 0px;
 }
 </style>

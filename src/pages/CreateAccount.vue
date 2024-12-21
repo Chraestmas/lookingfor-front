@@ -12,18 +12,22 @@
              <label for="Email-One-2" class="ms-input-label">Email Address</label>
             <input @input="onEmailInput" class="ms-input w-input" maxlength="256"
             name="Email-One-2" data-name="Email One 2" placeholder="e.g. email@gmail.com" type="email" id="Email-One-2"
-            data-ms-member="email" required=""></div>
+            data-ms-member="email" required="">
+            <p class="errMsg">{{ emailErrMsg  }}</p>
+            
+            </div>
         <div>
           <label for="Password-One-2" class="ms-input-label">Password</label>
           <input @input="onPasswordInput" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2"
             placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password" required="">
-          <div class="ms-help-text">Password must contain 8+ characters and a capital letter</div>
+          <p class="errMsg">{{ passwordErrMsg  }}</p>
         </div>
         <div>
           <label for="Password-One-3" class="ms-input-label">Confirm Password</label>
           <input @input="onPasswordCheckInput" class="ms-input w-input"
             maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕"
             type="password" id="Password-One-3" data-ms-member="password" required=""></div>
+          <p class="errMsg">{{ passwordErrMsg  }}</p>
         <div>
           <button class="button-primary w-button">Sign Up</button>
         </div>
@@ -50,6 +54,8 @@ const userName = ref('');
 const email = ref('');
 const password = ref('');
 const passwordCheck = ref('');
+const emailErrMsg = ref('');
+const passwordErrMsg = ref('');
 
 function onUserNameInput(e) {
   userName.value = e.target.value;
@@ -66,7 +72,36 @@ function onPasswordCheckInput(e) {
   passwordCheck.value = e.target.value;
 }
 
+function validateEmail (){
+    const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+    if(email.value ==''){
+        emailErrMsg.value = 'Email is required.'
+    }else if(!emailPattern.test(email.value)){
+        emailErrMsg.value = 'Please try again in email format.'
+    }else{
+        emailErrMsg.value = ''
+    }
+}
+
+function validatePassword (){
+    const passwordPattern = /^(?=.*[A-Z]).+$/;
+    if(password.value ==''){
+        passwordErrMsg.value = 'Password is required.'
+    }else if(password.value.length < 8){
+        passwordErrMsg.value = 'Password must be 8+ characters.'
+    }else if(!passwordPattern.test(password.value)){
+        passwordErrMsg.value = 'Password needs to contain at least 1 capital letter.'
+    }else{
+        passwordErrMsg.value = ''
+    }
+}
+
 async function handleSubmit(){
+  validateEmail();
+  validatePassword();
+  if( emailErrMsg.value != '' || passwordErrMsg.value != ''){
+    return;
+  }
   try{
     const res = await axios.post("http://localhost:8001/api/user", {id:email.value, name:userName.value, password:password.value })
     if(res.data === null){
@@ -84,5 +119,10 @@ async function handleSubmit(){
 <style scoped>
 .ms-input{
   width: 100%;
+  margin-bottom: 0px;
+}
+
+.errMsg{
+  margin-bottom:1em;
 }
 </style>
