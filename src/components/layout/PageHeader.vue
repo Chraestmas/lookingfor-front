@@ -20,7 +20,7 @@
               <router-link class="auth-btn web" to="/account-details">{{id}}</router-link>
             </li>
             <li v-if="id">
-              <button class="logout-btn" to="/account-details">logout</button>
+              <button @click="onLogout" class="nav-link2 logout-btn" >logout</button>
             </li>
           </ul>
         </nav>
@@ -49,7 +49,7 @@
               <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
             </li>
             <li v-if="id">
-              <button class="logout-btn" to="/account-details">logout</button>
+              <button @click="onLogout" class="nav-link2 logout-btn" to="/account-details">logout</button>
             </li>
         </ul>
       </nav>
@@ -60,10 +60,13 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 
 const isMenuOpen = ref(false);
 const isSearch = ref(false);
-const id = computed(()=>localStorage.getItem('id'));
+const store = useStore();
+
+const id = computed(()=>store.getters.getUserId);
 const route = useRoute();
 
 const router = useRouter();
@@ -72,6 +75,12 @@ const toggleMenu = (event) => {
   event.stopPropagation();
   isMenuOpen.value = !isMenuOpen.value;
 };
+
+const onLogout= ()=>{
+  store.dispatch('logout');
+  alert('successfully logged out');
+  router.replace('/');
+}
 
 const closeMenu = (event) => {
   if (!event.target.closest('.navbar-overlay') && !event.target.closest('.menu-icon')) {
