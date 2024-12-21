@@ -14,7 +14,7 @@
             <option value="" >Select Category</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
-          
+          <p class="errMsg">{{ categoryErrMsg  }}</p>
         </div>
 
         <!-- Location Dropdown -->
@@ -24,19 +24,19 @@
             <option value="" >Select Location</option>
             <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
           </select>
-          
+          <p class="errMsg">{{ locationErrMsg  }}</p>
         </div>
 
         <!-- Other fields as is -->
         <div class="pricing-card-three">
           <p class="pricing-card-text">Name Tag</p>
           <input type="text" v-model="nameTag" @input="updateParent" placeholder="Enter Name Tag" />
-          
+          <p class="errMsg">{{ nameTagErrMsg  }}</p>
         </div>
         <div class="pricing-card-three">
           <p class="pricing-card-text">Date Found</p>
           <input type="date" v-model="dateFound" @input="updateParent" />
-          
+          <p class="errMsg">{{ dateFoundErrMsg  }}</p>
         </div>
         <div class="pricing-card-three">
           <p class="pricing-card-text">Status & Pickup Person Name</p>
@@ -88,6 +88,27 @@ const props = defineProps({
 // 드롭다운 데이터
 const categories = ref([]);
 const locations = ref([]);
+const categoryErrMsg = ref('');
+const locationErrMsg = ref('');
+const nameTagErrMsg = ref('');
+const dateFoundErrMsg = ref('');
+
+function validateCategory (){
+    if(categories.value == ''){
+        categoryErrMsg.value = 'Email is required.'
+    }else{
+        categoryErrMsg.value = ''
+    }
+}
+
+function validateLocation (){
+    if(locations.value == ''){
+        locationErrMsg.value = 'Email is required.'
+    }else{
+        locationErrMsg.value = ''
+    }
+}
+
 
 // 내부 데이터와 v-model 바인딩
 const name = ref(props.initialData.name || '');
@@ -129,6 +150,7 @@ async function fetchLocation(){
   locations.value = res.data;
   console.log(res.data);
 }
+
 onMounted(()=>{
   fetchCategory();
   fetchLocation();
@@ -146,7 +168,17 @@ watch(() => props.initialData, (newData) => {
   dateRetrieved.value = newData.pickupDate;
   description.value = newData.description;
 }, { immediate: true });
+
+
+
 </script>
+
+
+
+
+
+
+
 
 <style scoped>
 .pricing-grid {

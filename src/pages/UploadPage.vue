@@ -15,6 +15,7 @@ import SearchImageSection from '@/components/section/UploadImageSection.vue';
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { validateCategory, validateLocation } from '@/components/section/UploadDetailSection.vue'
 
 const router = useRouter();
 const route = useRoute();
@@ -46,6 +47,8 @@ const handleImageUpload = (uploadedFiles) => {
 
 // 서버에서 데이터를 가져오는 함수 (예시)
 const fetchFormData = async () => {
+  validateCategory();
+  validateLocation();
   try {
     // 서버에서 기존 데이터 가져오는 예시
     // 실제로는 axios나 fetch로 API 호출을 해야 합니다.
