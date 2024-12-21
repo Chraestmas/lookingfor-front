@@ -17,6 +17,9 @@
                 <div class="carousel-item" v-for="(image) in slides" :key="image.id">
                     <img :src="`http://localhost:8001${image.url}`" alt="Carousel Image" class="carousel-image" />
                 </div>
+                <div v-if="slides.length === 0" class="carousel-item">
+                    <img :src="`https://cdn.prod.website-files.com/66f8d5504594ca1c1fb8ded5/671dd8500f7c9d454b070281_Screenshot%202024-10-27%20at%203.05.48%E2%80%AFPM.png`" alt="Carousel Image" class="carousel-image" />
+                </div>
             </div>
             <button @click="moveToPrevSlide" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">

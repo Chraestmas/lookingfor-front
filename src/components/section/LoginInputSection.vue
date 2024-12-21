@@ -55,9 +55,9 @@ const passwordErrMsg = ref('');
 function validateEmail (){
     const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
     if(email.value ==''){
-        emailErrMsg.value = 'email은 필수 입력 값입니다.'
+        emailErrMsg.value = 'Email is required.'
     }else if(!emailPattern.test(email.value)){
-        emailErrMsg.value = 'email 형식이 아닙니다.'
+        emailErrMsg.value = 'Please try again in email format.'
     }else{
         emailErrMsg.value = ''
     }
@@ -65,11 +65,11 @@ function validateEmail (){
 function validatePassword (){
     const passwordPattern = /^(?=.*[A-Z]).+$/;
     if(password.value ==''){
-        passwordErrMsg.value = 'password는 필수 입력 값입니다.'
+        passwordErrMsg.value = 'Password is required.'
     }else if(password.value.length < 8){
-        passwordErrMsg.value = '비밀번호는 8글자 이상으로 입력하세요'
+        passwordErrMsg.value = 'Password must be 8+ characters.'
     }else if(!passwordPattern.test(password.value)){
-        passwordErrMsg.value = '비밀번호는 적어도 1개 이상의 대문자가 포함되어야합니다.'
+        passwordErrMsg.value = 'Password needs to contain at least 1 capital letter.'
     }else{
         passwordErrMsg.value = ''
     }
@@ -91,7 +91,7 @@ async function login(){
     }catch(e){
         //로그인 실패
         console.log(e);
-        alert('아이디 또는 비밀번호를 확인하세요')
+        alert('Check your id or password.')
     }
 
 }
