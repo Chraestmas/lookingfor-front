@@ -3,7 +3,7 @@
     <div class="container-name">
       <p class="pricing-card-text" style="text-align: center;">Item Name</p>
       <input v-model="name" @input="updateParent" type="text" placeholder="Enter Item Name">
-      
+      <p class="errMsg">{{ errMsgs.nameErrMsg  }}</p>
     </div>
     <div class="container-4">
       <div class="pricing-grid">
@@ -14,7 +14,7 @@
             <option value="" >Select Category</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
-          <p class="errMsg">{{ categoryErrMsg  }}</p>
+          <p class="errMsg">{{ errMsgs.categoryErrMsg  }}</p>
         </div>
 
         <!-- Location Dropdown -->
@@ -24,19 +24,19 @@
             <option value="" >Select Location</option>
             <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
           </select>
-          <p class="errMsg">{{ locationErrMsg  }}</p>
+          <p class="errMsg">{{ errMsgs.locationErrMsg  }}</p>
         </div>
 
         <!-- Other fields as is -->
         <div class="pricing-card-three">
           <p class="pricing-card-text">Name Tag</p>
           <input type="text" v-model="nameTag" @input="updateParent" placeholder="Enter Name Tag" />
-          <p class="errMsg">{{ nameTagErrMsg  }}</p>
+          <p class="errMsg">{{ errMsgs.nameTagErrMsg  }}</p>
         </div>
         <div class="pricing-card-three">
           <p class="pricing-card-text">Date Found</p>
           <input type="date" v-model="dateFound" @input="updateParent" />
-          <p class="errMsg">{{ dateFoundErrMsg  }}</p>
+          <p class="errMsg">{{ errMsgs.foundDateErrMsg  }}</p>
         </div>
         <div class="pricing-card-three">
           <p class="pricing-card-text">Status & Pickup Person Name</p>
@@ -65,6 +65,7 @@
       <div class="hero-wrapper-two-4">
         <h1 id="desc-h1">Description</h1>
         <textarea v-model="description" @input="updateParent" placeholder="Enter Description"></textarea>
+        <p class="errMsg">{{ errMsgs.descriptionErrMsg  }}</p>
       </div>
     </div>
   </section>
@@ -82,32 +83,18 @@ const props = defineProps({
   },
   isEdit:{
     type:Boolean
+  },
+  errMsgs:{
+    type:Object
   }
 });
 
 // 드롭다운 데이터
 const categories = ref([]);
 const locations = ref([]);
-const categoryErrMsg = ref('');
-const locationErrMsg = ref('');
-const nameTagErrMsg = ref('');
-const dateFoundErrMsg = ref('');
 
-function validateCategory (){
-    if(categories.value == ''){
-        categoryErrMsg.value = 'required.'
-    }else{
-        categoryErrMsg.value = ''
-    }
-}
 
-function validateLocation (){
-    if(locations.value == ''){
-        locationErrMsg.value = 'required.'
-    }else{
-        locationErrMsg.value = ''
-    }
-}
+
 
 
 // 내부 데이터와 v-model 바인딩
@@ -140,9 +127,11 @@ const updateParent = () => {
   });
 };
 async function fetchCategory(){
-  let res = await axios.get('http://localhost:8001/api/category');
-  categories.value = res.data;
-  console.log(res.data);
+ 
+    let res = await axios.get('http://localhost:8001/api/category');
+    categories.value = res.data;
+    console.log(res.data);
+  
 }
 
 async function fetchLocation(){
