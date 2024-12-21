@@ -1,6 +1,6 @@
 <template>
   <SearchImageSection @upload-image="handleImageUpload"/>
-  <SearchDetailSection :isEdit="isEdit" @update-form="handleFormUpdate" :initialData="formData" />
+  <SearchDetailSection :errMsgs="errMsgs" :locationErrMsg="locationErrMsg" :isEdit="isEdit" @update-form="handleFormUpdate" :initialData="formData" />
   <section class="section-2">
     <div class="w-layout-blockcontainer w-container">
       <button @click="handleSubmit" class="button-primary w-button">{{isEdit ? "save" : "create"}}</button>
@@ -15,11 +15,23 @@ import SearchImageSection from '@/components/section/UploadImageSection.vue';
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
 const router = useRouter();
 const route = useRoute();
 // Props로 전달받은 isEdit 상태
-const isEdit = computed(()=>route.params.id ? true : false)
+const isEdit = computed(()=>route.params.id ? true : false);
+
+// const categoryErrMsg = ref('');
+// const locationErrMsg = ref('');
+// const nameErrMsg = ref('');
+const errMsgs = ref({
+  categoryErrMsg :'',
+  locationErrMsg : '',
+  nameErrMsg : '',
+  nameTagErrMsg : '',
+  foundDateErrMsg : '',
+  descriptionErrMsg : '',
+})
+
 
 // formData의 초기 상태
 const formData = ref({
@@ -43,9 +55,57 @@ const imagesToUpload = ref([]);
 const handleImageUpload = (uploadedFiles) => {
   imagesToUpload.value = uploadedFiles;
 };
+function validateCategory (){
+    if(formData.value.categoryId == ''){
+        errMsgs.value.categoryErrMsg = 'Category is required.'
+      }else{
+        errMsgs.value.categoryErrMsg = ''
+    }
+}
+
+function validateLocation (){
+    if(formData.value.locationId == ''){
+        errMsgs.value.locationErrMsg = 'Location is required.'
+      }else{
+        errMsgs.value.locationErrMsg = ''
+    }
+}
+
+function validateName(){
+  if(!formData.value.name){
+    errMsgs.value.nameErrMsg = 'Name is required.';
+  }else{
+    errMsgs.value.nameErrMsg = '';
+  }
+}
+
+function validateNameTag(){
+  if(!formData.value.nameTag){
+    errMsgs.value.nameTagErrMsg = 'NameTag is required.';
+  }else{
+    errMsgs.value.nameTagErrMsg = '';
+  }
+}
+
+function validateFoundDate(){
+  if(!formData.value.foundDate){
+    errMsgs.value.foundDateErrMsg = 'FoundDate is required.';
+  }else{
+    errMsgs.value.foundDateErrMsg = '';
+  }
+}
+
+function validateDescription(){
+  if(!formData.value.description){
+    errMsgs.value.descriptionErrMsg = 'Description is required.';
+  }else{
+    errMsgs.value.descriptionErrMsg = '';
+  }
+}
 
 // 서버에서 데이터를 가져오는 함수 (예시)
 const fetchFormData = async () => {
+
   try {
     // 서버에서 기존 데이터 가져오는 예시
     // 실제로는 axios나 fetch로 API 호출을 해야 합니다.
@@ -66,6 +126,13 @@ const handleFormUpdate = (data) => {
 };
 
 const handleSubmit = async () => {
+  validateCategory();
+  validateLocation();
+  validateName();
+  validateNameTag();
+  validateFoundDate();
+  validateDescription();
+
   const formDataToSend = new FormData();
   
   // 이미지 파일들을 FormData에 추가
