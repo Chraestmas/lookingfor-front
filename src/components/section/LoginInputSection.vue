@@ -54,10 +54,8 @@ const router = useRouter();
 
 const email = ref('');
 const password = ref('');
-const permit = ref('');
 const emailErrMsg = ref('');
 const passwordErrMsg = ref('');
-const permitErrMsg = ref('');
 
 function validateEmail (){
     const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
@@ -82,14 +80,8 @@ function validatePassword (){
     }
 }
 
-function validatePermit(){
-    if(permit.value ==''){
-        permitErrMsg.value = 'Please wait until admin grants permission for your account.'
-    }
-}
 
 async function login(){
-    validatePermit();
     validateEmail();
     validatePassword();
     if(emailErrMsg.value != '' || passwordErrMsg.value != ''){
@@ -106,7 +98,15 @@ async function login(){
     }catch(e){
         //로그인 실패
         console.log(e);
-        alert('Check your id or password.')
+        if(e.status == 401){
+            alert('check id or password')
+        }else if(e.status == 400){
+            alert('check id or password')
+        }else if(e.status == 403){
+            alert('Not allowed user')
+        }else{
+            alert('server 오류 발생')
+        }
     }
 
 }
