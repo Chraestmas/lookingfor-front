@@ -9,7 +9,7 @@
                 <p class="errMsg">{{ emailErrMsg  }}</p>
             </div>
             <div>
-                <label for="Password-One-2" class="ms-input-label">Password Input</label>
+                <label for="Password-One-2" class="ms-input-label">Password</label>
                 <input @input = "(e)=>{password=e.target.value}" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password">
                 <p class="errMsg">{{ passwordErrMsg  }}</p>
             </div>
@@ -100,7 +100,7 @@ async function login(){
         }else if(e.status == 403){
             alert('Not allowed user')
         }else{
-            alert('server 오류 발생')
+            alert('Server error: please try again later.')
         }
     }
 

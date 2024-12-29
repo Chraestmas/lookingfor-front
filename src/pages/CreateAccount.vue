@@ -110,7 +110,13 @@ async function handleSubmit(){
     }
     alert(res.data.id + 'Your account has been created!');
   }catch(e){
-    alert('Server error: please try again later.');
+    //id 생성 실패
+    console.log(e);
+    if(e.status == 401){
+      alert('Already Existed Id')
+    } else {
+      alert('Server error: please try again later.');
+    }
   }
 }
 
