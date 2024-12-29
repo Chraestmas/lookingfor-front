@@ -1,5 +1,5 @@
 <template>
-  <SearchImageSection @upload-image="handleImageUpload"/>
+  <SearchImageSection :existingImages="formData.pictures" @upload-image="handleImageUpload"/>
   <SearchDetailSection :errMsgs="errMsgs" :locationErrMsg="locationErrMsg" :isEdit="isEdit" @update-form="handleFormUpdate" :initialData="formData" />
   <section class="section-2">
     <div class="w-layout-blockcontainer w-container">
@@ -20,9 +20,6 @@ const route = useRoute();
 // Props로 전달받은 isEdit 상태
 const isEdit = computed(()=>route.params.id ? true : false);
 
-// const categoryErrMsg = ref('');
-// const locationErrMsg = ref('');
-// const nameErrMsg = ref('');
 const errMsgs = ref({
   categoryErrMsg :'',
   locationErrMsg : '',
@@ -47,11 +44,13 @@ const formData = ref({
 	pickupDate:'',
 	pickupPersonName:'',
 	description:'',
-	userId :''
+	userId :'',
+  pictures:[]
 });
 
 // 이미지 업로드 처리
-const imagesToUpload = ref([]);
+const imagesToUpload = ref([]); // 업로드할 이미지를 저장할 배열
+
 const handleImageUpload = (uploadedFiles) => {
   imagesToUpload.value = uploadedFiles;
 };
@@ -132,6 +131,11 @@ const handleSubmit = async () => {
   validateNameTag();
   validateFoundDate();
   validateDescription();
+  if(errMsgs.value.categoryErrMsg || errMsgs.value.descriptionErrMsg || errMsgs.value.foundDateErrMsg || 
+   errMsgs.value.locationErrMsg || errMsgs.value.nameErrMsg || errMsgs.value.nameTagErrMsg
+  ){
+    return;
+  }
 
   const formDataToSend = new FormData();
   
