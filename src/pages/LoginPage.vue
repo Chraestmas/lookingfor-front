@@ -1,9 +1,11 @@
 <template>
   <LoginInputSection/>
+  <CustomPopup/>
 </template>
 
 <script setup>
-  import LoginInputSection from "@/components/section/LoginInputSection.vue";
+  import CustomPopup from "@/components/layout/CustomPopup.vue";
+import LoginInputSection from "@/components/section/LoginInputSection.vue";
 </script>
 
 <style scoped>
