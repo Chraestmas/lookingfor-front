@@ -46,11 +46,6 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-
-const store = useStore();
-const router = useRouter();
 
 const email = ref('');
 const password = ref('');
@@ -67,6 +62,7 @@ function validateEmail (){
         emailErrMsg.value = ''
     }
 }
+
 function validatePassword (){
     const passwordPattern = /^(?=.*[A-Z]).+$/;
     if(password.value ==''){
@@ -90,14 +86,13 @@ async function login(){
         const response = await axios.post('http://localhost:8001/api/login', { id: email.value, password: password.value });
         const res = response.data;
         console.log(response.data);
-        // vuex(전역상태관리)에 저장
-        store.dispatch('login', {userId : res.id, jwtToken : res.authToken});
-        console.log(res)
-        router.push('/');
+        // 로그인 성공 시 토큰을 로컬 스토리지에 저장
+        localStorage.setItem('jwtToken', res.authToken);
+        localStorage.setItem('id', res.id);
     }catch(e){
         //로그인 실패
         console.log(e);
-        alert('Check your id or password.')
+        alert('Check your id or password is correct.')
     }
 
 }
