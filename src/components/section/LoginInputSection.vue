@@ -9,7 +9,7 @@
                 <p class="errMsg">{{ emailErrMsg  }}</p>
             </div>
             <div>
-                <label for="Password-One-2" class="ms-input-label">Password Input</label>
+                <label for="Password-One-2" class="ms-input-label">Password</label>
                 <input @input = "(e)=>{password=e.target.value}" class="ms-input w-input" maxlength="256" name="Password-One-2" data-name="Password One 2" placeholder="⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕ ⁕" type="password" id="Password-One-2" data-ms-member="password">
                 <p class="errMsg">{{ passwordErrMsg  }}</p>
             </div>
@@ -46,11 +46,16 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const email = ref('');
 const password = ref('');
 const emailErrMsg = ref('');
 const passwordErrMsg = ref('');
+
+const store = useStore();
+const router = useRouter();
 
 function validateEmail (){
     const emailPattern = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
@@ -87,9 +92,10 @@ async function login(){
         const response = await axios.post('http://localhost:8001/api/login', { id: email.value, password: password.value });
         const res = response.data;
         console.log(response.data);
-        // 로그인 성공 시 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('jwtToken', res.authToken);
-        localStorage.setItem('id', res.id);
+        // vuex(전역상태관리)에 저장
+        store.dispatch('login', {userId : res.id, jwtToken : res.authToken});
+        console.log(res)
+        router.push('/');
     }catch(e){
         //로그인 실패
         console.log(e);
@@ -100,7 +106,7 @@ async function login(){
         }else if(e.status == 403){
             alert('Not allowed user')
         }else{
-            alert('server 오류 발생')
+            alert('Server error: please try again later.')
         }
     }
 
