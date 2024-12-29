@@ -29,7 +29,7 @@
             </div>
           </div>
           <label 
-          v-if="imageFiles.length < 3"
+          v-if="prevImages.length < 3"
             id="w-node-a779c83f-e568-e906-8a87-2dae4cda2496-e6b90512"
             class="f-gallery-lightbox w-inline-block w-lightbox"
           >
@@ -48,14 +48,16 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
+const props = defineProps(['existingImages'])
 
-const prevImages = ref([]);
+
+const prevImages = ref(props.existingImages.map((e)=>`http://localhost:8001${e.url}`));
 const imageFiles = ref([]);
 const hoveredIndex = ref(null);  // 현재 마우스가 올려진 이미지의 인덱스
 const fileInput = ref(null);  // input 엘리먼트 참조
 const emit = defineEmits(['upload-image']);
-
+console.log(prevImages)
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -63,6 +65,7 @@ const handleImageUpload = (event) => {
     reader.onload = () => {
       // 이미지 미리보기 이후, 배열에 추가 (이미지 갤러리용)
       prevImages.value.push(reader.result);
+      console.log(prevImages.value)
       imageFiles.value.push(file);
       emit('upload-image', imageFiles.value);
       fileInput.value.value = null;

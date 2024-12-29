@@ -15,10 +15,15 @@ import SearchImageSection from '@/components/section/UploadImageSection.vue';
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 const router = useRouter();
 const route = useRoute();
 // Props로 전달받은 isEdit 상태
 const isEdit = computed(()=>route.params.id ? true : false);
+
+const store = useStore();  // Vuex 스토어 가져오기
+const userId = computed(() => store.getters.getUserId);  // 로그인한 userId 가져오기
+
 
 const errMsgs = ref({
   categoryErrMsg :'',
@@ -125,6 +130,12 @@ const handleFormUpdate = (data) => {
 };
 
 const handleSubmit = async () => {
+  if (!userId.value) {
+    alert('You must be logged in to upload an item.');
+    router.push('/login');  // 로그인 페이지로 리디렉션
+    return;
+  }
+
   validateCategory();
   validateLocation();
   validateName();
@@ -136,6 +147,9 @@ const handleSubmit = async () => {
   ){
     return;
   }
+
+  // 로그인된 userId를 formData에 추가
+  formData.value.userId = userId.value;  // 로그인한 userId를 formData에 추가
 
   const formDataToSend = new FormData();
   
