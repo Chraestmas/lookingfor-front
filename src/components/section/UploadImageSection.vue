@@ -17,12 +17,12 @@
               @mouseleave="hoveredIndex = null"
             >
               <div class="f-gallery-image-s">
-                <img :src="i" loading="lazy" alt="" class="f-image-cover" />
+                <img :src="i.url" loading="lazy" alt="" class="f-image-cover" />
               </div>
               <button 
                 v-if="hoveredIndex === index" 
                 class="delete-button" 
-                @click="removeImage(index)"
+                @click="removeImage(index, i.id)"
               >
                 X
               </button>
@@ -48,23 +48,24 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue';
+import axios from 'axios';
+import { ref, defineEmits, defineProps, watch } from 'vue';
 const props = defineProps(['existingImages'])
 
 
-const prevImages = ref(props.existingImages.map((e)=>`http://localhost:8001${e.url}`));
+const prevImages = ref(props.existingImages.map((e)=>({id:e.id, url:`http://localhost:8001${e.url}`})));
 const imageFiles = ref([]);
 const hoveredIndex = ref(null);  // 현재 마우스가 올려진 이미지의 인덱스
 const fileInput = ref(null);  // input 엘리먼트 참조
 const emit = defineEmits(['upload-image']);
-console.log(prevImages)
+console.log(prevImages.value, "preve image")
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
       // 이미지 미리보기 이후, 배열에 추가 (이미지 갤러리용)
-      prevImages.value.push(reader.result);
+      prevImages.value.push({url:reader.result});
       console.log(prevImages.value)
       imageFiles.value.push(file);
       emit('upload-image', imageFiles.value);
@@ -76,11 +77,26 @@ const handleImageUpload = (event) => {
 };
 
 // 이미지 삭제 함수
-const removeImage = (index) => {
+const removeImage = async (index, id) => {
   prevImages.value.splice(index, 1);
   imageFiles.value.splice(index, 1);
+  if(id){
+    try{
+      await axios.delete(`http://localhost:8001/api/image/${id}`);
+      alert('image delete success')
+    }catch(e){
+      alert('image delete failed')
+    }
+  }
   emit('upload-image', imageFiles.value); // 삭제 후, 부모 컴포넌트로 최신 이미지 배열을 전달
 };
+
+// existingImages의 값이 바뀔 때마다 prevImages를 갱신
+watch(() => props.existingImages, (newVal) => {
+  if (newVal && Array.isArray(newVal)) {
+    prevImages.value = newVal.map(e => ({id:e.id, url:`http://localhost:8001${e.url}`}));
+  }
+}, { immediate: true });
 </script>
 
 <style scoped>

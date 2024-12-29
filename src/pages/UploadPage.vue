@@ -175,7 +175,9 @@ const handleSubmit = async () => {
     let response = null;
     if(isEdit.value === true){
       url = `http://localhost:8001/api/item/${route.params.id}`
-      response = await axios.put(url, formData.value);
+      response = await axios.put(url, formDataToSend, {headers: {
+          'Content-Type': 'multipart/form-data' // 요청 헤더에 멀티파트로 지정
+        }});
     }else{
       response = await axios.post(url, formDataToSend, {
         headers: {
