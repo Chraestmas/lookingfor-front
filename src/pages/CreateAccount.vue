@@ -42,13 +42,30 @@
         </RouterLink>
       </form>
     </div>
+    <CustomPopup
+  v-if="isModalOpen"
+    :popupTitle="popupTitle"
+    :buttonText="'Confirm'"
+    :popupDetail="popupDetail"
+    @buttonClick="closeModal"
+    @close = "closeModal"
+  />
   </section>
 
 </template>
 
 <script setup>
+import CustomPopup from '@/components/layout/CustomPopup.vue';
+import router from '@/router';
 import axios from 'axios';
 import { ref } from 'vue';
+
+const isModalOpen = ref(false);
+const popupTitle = ref('');
+const popupDetail = ref('');
+const closeModal = ref(()=>{
+  isModalOpen.value = false;
+})
 
 const userName = ref('');
 const email = ref('');
@@ -104,18 +121,32 @@ async function handleSubmit(){
   }
   try{
     const res = await axios.post("http://localhost:8001/api/user", {id:email.value, name:userName.value, password:password.value })
+    console.log(res.data);
     if(res.data === null){
-      alert('Cannot create account at the moment.');
+      popupTitle.value = 'Create Failed';
+      popupDetail.value = 'Cannot create account at the moment.';
+      isModalOpen.value = true;
+      
+      closeModal.value = ()=>{isModalOpen.value = false}
       return;
     }
-    alert(res.data.id + 'Your account has been created!');
+    popupTitle.value = 'Create Success';
+    popupDetail.value = res.data.id + 'Your account has been created!';
+    isModalOpen.value = true;
+    closeModal.value = ()=>{router.replace('/')}
   }catch(e){
     //id 생성 실패
     console.log(e);
     if(e.status == 401){
-      alert('Already Existed Id')
+      popupTitle.value = 'Create Failed';
+      popupDetail.value = 'Already Existed Id';
+      isModalOpen.value = true;
+      closeModal.value = ()=>{isModalOpen.value = false}
     } else {
-      alert('Server error: please try again later.');
+      popupTitle.value = 'Server Error';
+      popupDetail.value = 'please try again later.';
+      isModalOpen.value = true;
+      closeModal.value = ()=>{isModalOpen.value = false}
     }
   }
 }

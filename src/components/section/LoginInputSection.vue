@@ -41,13 +41,39 @@
         </div> -->
         </div>
     </section>
+    <CustomPopup
+      v-if="showPopup"
+      :popupTitle="popupTitle"
+      :popupDetail="popupDetail"
+      :buttonText="'Confirm'"
+      @buttonClick="onButtonClick"
+      @close="onClose"
+    />
 </template>
 
 <script setup>
+import CustomPopup from "@/components/layout/CustomPopup.vue";
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+
+// State to control popup visibility
+const showPopup = ref(false);
+const popupTitle = ref('Login Success');
+const popupDetail = ref('');
+
+// Handle button click event from the popup
+const onButtonClick = ref(() => {
+  console.log('Button clicked!');
+  // You can add additional actions here
+});
+
+// Handle close event from the popup
+const onClose = ref(() => {
+  showPopup.value = false; // Close the popup
+});
+
 
 const email = ref('');
 const password = ref('');
@@ -95,18 +121,38 @@ async function login(){
         // vuex(전역상태관리)에 저장
         store.dispatch('login', {userId : res.id, jwtToken : res.authToken});
         console.log(res)
-        router.push('/');
+        showPopup.value = true;
+        popupTitle.value = 'Login Success'
+        popupDetail.value = 'Welcome ' + res.id +'!'
+        onClose.value = ()=>{
+            router.push('/');
+        }
+        onButtonClick.value = ()=>{
+            router.push('/');
+        }
+        
     }catch(e){
         //로그인 실패
         console.log(e);
+        showPopup.value = true;
+        onClose.value = ()=>{
+            showPopup.value = false;
+        }
+        onButtonClick.value = ()=>{
+            showPopup.value = false;
+        }
         if(e.status == 401){
-            alert('check id or password')
-        }else if(e.status == 400){
-            alert('check id or password')
+            popupTitle.value = 'Login Failed'
+            popupDetail.value = 'check id or password'
+        }else if(e.status == 400){ 
+            popupTitle.value = 'Login Failed'
+            popupDetail.value = 'check id or password'
         }else if(e.status == 403){
-            alert('Not allowed user')
+            popupTitle.value = 'Login Failed'
+            popupDetail.value = 'Not allowed user'
         }else{
-            alert('Server error: please try again later.')
+            popupTitle.value = 'Server Error'
+            popupDetail.value = 'please try again later.'
         }
     }
 
