@@ -49,18 +49,32 @@
               <router-link class="auth-btn" to="/account-details">{{id}}</router-link>
             </li>
             <li v-if="id">
-              <button @click="onLogout" class="nav-link2 logout-btn" to="/account-details">logout</button>
+              <button @click="onLogout" class="nav-link2 logout-btn" >logout</button>
             </li>
         </ul>
       </nav>
     </div>
   </div>
+  <CustomPopup
+  v-if="isModalOpen"
+    :popupTitle="'Logout Success'"
+    :buttonText="'Confirm'"
+    :popupDetail="'Logged out Successfully'"
+    @buttonClick="closeModal"
+    @close = "closeModal"
+  />
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+import CustomPopup from './CustomPopup.vue';
+const isModalOpen = ref(false);
+const closeModal = ()=>{
+  isModalOpen.value = false;
+}
+
 
 const isMenuOpen = ref(false);
 const isSearch = ref(false);
@@ -78,8 +92,8 @@ const toggleMenu = (event) => {
 
 const onLogout= ()=>{
   store.dispatch('logout');
-  alert('successfully logged out');
-  router.replace('/');
+  isModalOpen.value = true;
+
 }
 
 const closeMenu = (event) => {

@@ -50,28 +50,42 @@
               <input @input="onCodeInput" class="w-input" maxlength="256" name="code" data-name="code" placeholder="" id="code" required="">
               <input type="submit" data-wait="Please wait..." class="button-primary w-button" value="Submit">
             </form>
-            <!-- <div class="w-form-done">
-          <div>Thank you! Your submission has been received!</div>
-        </div>
-        <div class="w-form-fail">
-          <div>Oops! Something went wrong while submitting the form.</div>
-        </div> -->
           </div>
         </div>
       </div>
-      <!-- <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
-      </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form.</div>
-      </div> -->
     </div>
   </section>
+  <CustomPopup
+      v-if="showPopup"
+      :popupTitle="popupTitle"
+      :popupDetail="popupDetail"
+      :buttonText="'Confirm'"
+      @buttonClick="onButtonClick"
+      @close="onClose"
+    />
 </template>
 
 <script setup>
+import CustomPopup from '@/components/layout/CustomPopup.vue';
+import router from '@/router';
 import axios from 'axios';
 import { ref } from 'vue';
+// State to control popup visibility
+const showPopup = ref(false);
+const popupTitle = ref('');
+const popupDetail = ref('');
+
+// Handle button click event from the popup
+const onButtonClick = ref(() => {
+  console.log('Button clicked!');
+  // You can add additional actions here
+});
+
+// Handle close event from the popup
+const onClose = ref(() => {
+  showPopup.value = false; // Close the popup
+});
+
 
 const codePopupOpen = ref(false);
 const isChecked = ref(false);
@@ -112,10 +126,19 @@ async function submitCodeData() {
     let res = await axios.post('http://localhost:8001/api/email/verifyCode', {email:email.value, code:code.value})
     closeCodePopup();
     isChecked.value = true;
-    alert(res.data);
+    showPopup.value = true;
+    popupTitle.value = 'Code Verified';
+    popupDetail.value = res.data;
+    onClose.value = ()=>{showPopup.value = false; };
+    onButtonClick.value = ()=>{showPopup.value = false};
+ 
   }catch(e){
     //인증코드가 잘못되었다면
-    alert('Invalid code.');
+    showPopup.value = true;
+    popupTitle.value = 'Code Verification Fail';
+    popupDetail.value = 'invalid code';
+    onClose.value = ()=>{router.replace('/')};
+    onButtonClick.value = ()=>{router.replace('/')};
   }
 
 }
@@ -128,48 +151,61 @@ function validatePassword (){
         passwordErrMsg.value = 'Password must be 8+ characters.'
     }else if(!passwordPattern.test(password.value)){
         passwordErrMsg.value = 'Password needs to contain at least 1 capital letter.'
+    }else if(password.value !== passwordCheck.value){
+      passwordErrMsg.value = 'Password Does Not Match';
     }else{
         passwordErrMsg.value = ''
     }
 }
 
 async function submitFormData() {
-  validatePassword();
+  
   if (!isChecked.value) { // 코드 보내기
     // email로 코드보내기 api 요청
     //email로 코드 보내기가 성공하면
     try {
       let res = await axios.post("http://localhost:8001/api/email/sendCode", { email: email.value });
-      alert(res.data);
-      openCodePopup();
+      showPopup.value = true;
+      popupTitle.value = 'Verfication Code Sent';
+      popupDetail.value = res.data;
+      onClose.value = ()=>{showPopup.value = false; openCodePopup();};
+      onButtonClick.value = ()=>{showPopup.value = false ; openCodePopup()};
+      
 
     } catch (e) {
       // email로 코드보내기가 실패하면
       //실패 처리
       console.log(e);
-      alert("Cannot send verification code.");
+      showPopup.value = true;
+      popupTitle.value = 'Verfication Code Fail';
+      popupDetail.value = 'Cannot send verification code.';
+      onClose.value = ()=>{showPopup.value= false};
+      onButtonClick.value = ()=>showPopup.value = false;
     }
 
   } else { 
-    // 비밀번호와 비밀번호 확인 일치하는지 확인
-    if(password.value !== passwordCheck.value){
-      alert("Password does not match!");
-      password.value = '';
-      passwordCheck.value = '';
-      return;
-    } else if(passwordErrMsg.value != ''){
+
+    validatePassword();
+    if(passwordErrMsg.value !== ''){
       return;
     }
-
     // 재설정할 비밀번호 보내기
     try{
       // 비밀번호 재설정이 성공하면
       let res = await axios.post("http://localhost:8001/api/user/resetPassword", {id:email.value, password:password.value});
-      alert(res.data);
+      showPopup.value = true;
+      popupTitle.value = 'Update Success'
+      popupDetail.value = res.data;
+      onClose.value = ()=>{router.replace('/login')};
+      onButtonClick.value = ()=>{router.replace('/login')};
     }catch(e){
       // 실패하면
       console.log(e);
-      alert('Failed to reset password.');
+      showPopup.value = true;
+      popupTitle.value = 'Update Fail';
+      popupDetail.value = 'Failed to reset password.';
+      onClose.value = ()=>{showPopup.value= false};
+      onButtonClick.value = ()=>showPopup.value = false;
     }
   }
 }
