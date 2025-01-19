@@ -191,7 +191,7 @@ form {
 }
 
 .permit_userno  {
-     text-align: right;
+     text-align: center;
 }
 
 .permit_id, .permit_name, .permit_authorized {
@@ -199,7 +199,7 @@ form {
 }
 
 .data_userno {
-    text-align: right;
+    text-align: center;
 }
 
 .data_id, .data_name {
