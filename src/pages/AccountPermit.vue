@@ -49,21 +49,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f7693f-9a5c91e1" class="f-career-row-wrapper">
+                            <!-- 여기 반복 -->
+                            <div v-for="user in users" v-bind:key="user.id" id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f7693f-9a5c91e1" class="f-career-row-wrapper">
                                 <div class="w-layout-grid f-career-row">
                                     <div>
                                         <div class="f-paragraph-regular-3">1</div>
                                     </div>
                                     <div id="w-node-_28166595-c19e-c704-1a20-af36d3bb7ac7-9a5c91e1">
-                                        <div class="f-paragraph-regular-3">aa@aa.com</div>
+                                        <div class="f-paragraph-regular-3">{{ user.id }}</div>
                                     </div>
                                     <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76944-9a5c91e1">
-                                        <div class="f-paragraph-regular-3 f-text-color-gray-501">aa</div>
+                                        <div class="f-paragraph-regular-3 f-text-color-gray-501">{{ user.name }}</div>
                                     </div>
                                     <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76947-9a5c91e1">
                                         <div class="f-toggle-wrap-2">
                                             <label class="toggle-container">
-                                                <input type="checkbox" name="isFound" />
+                                                <input type="checkbox" :checked="user.permit === 'Y'"/>
                                                 <span class="slider"></span>
                                             </label>
                                         </div>
@@ -75,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        <!-- 반복 끝 -->
                         </div>
                     </div>
                 </div>
@@ -87,65 +88,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 
-const users = ref([
-    {
-        "id": "aa@aa.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "admin@admin.com",
-        "name": "Admin",
-        "password": null,
-        "permit": "Y"
-    },
-    {
-        "id": "bb@bb.com",
-        "name": "test2",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bba@bb.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bbc@bb.com",
-        "name": "test2",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bbd@bb.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "dd@dd.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "dd@dd.coma",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "guest@guest.com",
-        "name": "Guest",
-        "password": null,
-        "permit": "N"
-    }
-]);
+const users = ref([]);
+
+onMounted(async ()=>{
+    const res = await axios.get(`http://localhost:8001/api/users`);
+    console.log(res.data)
+    users.value = res.data;
+});
 
 </script>
 
