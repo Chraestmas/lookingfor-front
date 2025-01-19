@@ -87,65 +87,65 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 
-const users = ref([
-    {
-        "id": "aa@aa.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "admin@admin.com",
-        "name": "Admin",
-        "password": null,
-        "permit": "Y"
-    },
-    {
-        "id": "bb@bb.com",
-        "name": "test2",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bba@bb.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bbc@bb.com",
-        "name": "test2",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "bbd@bb.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "dd@dd.com",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "dd@dd.coma",
-        "name": "test",
-        "password": null,
-        "permit": "N"
-    },
-    {
-        "id": "guest@guest.com",
-        "name": "Guest",
-        "password": null,
-        "permit": "N"
-    }
-]);
+// const users = ref([
+//     {
+//         "id": "aa@aa.com",
+//         "name": "test",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "admin@admin.com",
+//         "name": "Admin",
+//         "password": null,
+//         "permit": "Y"
+//     },
+//     {
+//         "id": "bb@bb.com",
+//         "name": "test2",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "bba@bb.com",
+//         "name": "test",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "bbc@bb.com",
+//         "name": "test2",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "bbd@bb.com",
+//         "name": "test",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "dd@dd.com",
+//         "name": "test",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "dd@dd.coma",
+//         "name": "test",
+//         "password": null,
+//         "permit": "N"
+//     },
+//     {
+//         "id": "guest@guest.com",
+//         "name": "Guest",
+//         "password": null,
+//         "permit": "N"
+//     }
+// ]);
 
 </script>
 
