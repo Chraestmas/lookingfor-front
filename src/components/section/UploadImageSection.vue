@@ -138,7 +138,7 @@ input[type="file"] {
   padding: 12px 15px;
   column-gap: 15px;
   margin-top: 15px;
-
-
 }
+
+
 </style>
