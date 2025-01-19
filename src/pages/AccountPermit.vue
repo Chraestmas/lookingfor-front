@@ -50,10 +50,10 @@
                                 </div>
                             </div>
                             <!-- 여기 반복 -->
-                            <div v-for="user in users" v-bind:key="user.id" id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f7693f-9a5c91e1" class="f-career-row-wrapper">
+                            <div v-for="(user , idx) in users" v-bind:key="user.id" id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f7693f-9a5c91e1" class="f-career-row-wrapper">
                                 <div class="w-layout-grid f-career-row">
                                     <div>
-                                        <div class="f-paragraph-regular-3">1</div>
+                                        <div class="f-paragraph-regular-3">{{ idx +1 }}</div>
                                     </div>
                                     <div id="w-node-_28166595-c19e-c704-1a20-af36d3bb7ac7-9a5c91e1">
                                         <div class="f-paragraph-regular-3">{{ user.id }}</div>
@@ -91,8 +91,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-
 const users = ref([]);
+
+
 
 onMounted(async ()=>{
     const res = await axios.get(`http://localhost:8001/api/users`);
