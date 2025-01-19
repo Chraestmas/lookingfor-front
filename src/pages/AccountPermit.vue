@@ -87,65 +87,17 @@
 </template>
 
 <script setup>
-// import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 
-// const users = ref([
-//     {
-//         "id": "aa@aa.com",
-//         "name": "test",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "admin@admin.com",
-//         "name": "Admin",
-//         "password": null,
-//         "permit": "Y"
-//     },
-//     {
-//         "id": "bb@bb.com",
-//         "name": "test2",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "bba@bb.com",
-//         "name": "test",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "bbc@bb.com",
-//         "name": "test2",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "bbd@bb.com",
-//         "name": "test",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "dd@dd.com",
-//         "name": "test",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "dd@dd.coma",
-//         "name": "test",
-//         "password": null,
-//         "permit": "N"
-//     },
-//     {
-//         "id": "guest@guest.com",
-//         "name": "Guest",
-//         "password": null,
-//         "permit": "N"
-//     }
-// ]);
+const users = ref([]);
+
+onMounted(async ()=>{
+    const res = await axios.get(`http://localhost:8001/api/users`);
+    console.log(res.data)
+    users.value = res.data;
+});
 
 </script>
 
@@ -335,20 +287,20 @@ input:checked+.slider {
 input:checked+.slider:before {
     transform: translateX(25px);
 }
-
+/* 
 #w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76944-9a5c91e1 {
     place-self: center;
-}
+} */
 
 #w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76947-9a5c91e1[data-v-27f9f698] {
-    justify-self: center;
+    justify-self: left;
 }
 
 .f-career-row-wrapper {
     border-bottom: 1px solid #e4e6f1;
     justify-content: space-between;
     align-items: center;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 </style>
