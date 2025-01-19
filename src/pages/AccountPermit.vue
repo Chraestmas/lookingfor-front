@@ -36,7 +36,7 @@
                                 class="f-career-position-block-title">
                                 <div class="w-layout-grid f-career-row">
                                     <div>
-                                        <h6 class="f-heading-detail-small-5">User no.</h6>
+                                        <h6 class="f-heading-detail-small-5">No.</h6>
                                     </div>
                                     <div id="w-node-_8c89afc6-fb43-aac8-8e7c-b9572e16add9-9a5c91e1">
                                         <h6 class="f-heading-detail-small-5">Id</h6>
@@ -71,7 +71,7 @@
                                     </div>
                                     <div id="w-node-df661eb8-d5fa-9d7d-0de5-42937562e9ae-9a5c91e1">
                                         <div class="f-paragraph-regular-3 f-text-color-gray-501">
-                                            <a href="item-search.html" class="button-primary w-button">Delete User</a>
+                                            <button @click="onDeleteUser(user.id)" class="button-primary w-button">Delete User</button>
                                         </div>
                                     </div>
                                 </div>
@@ -101,6 +101,14 @@ onMounted(async ()=>{
     users.value = res.data;
 });
 
+async function onDeleteUser(id) {
+    console.log(id)
+    const res = await axios.delete('http://localhost:8001/api/user/' + id);
+    if(res.data == '성공'){
+        users.value = users.value.filter((el)=>{return el.id !== id});
+    }
+}
+
 </script>
 
 <style scoped>
@@ -112,6 +120,7 @@ onMounted(async ()=>{
 
 .f-paragraph-regular-3 {
     letter-spacing: -.02em;
+    text-align: center;
     margin-bottom: 0;
     font-size: 16px;
     line-height: 1.8;
@@ -186,6 +195,7 @@ form {
     color: var(--flowui-component-library--gray-500);
     letter-spacing: .08em;
     text-transform: uppercase;
+    text-align: center;
     font-size: 14px;
     font-weight: 700;
     line-height: 24px;
