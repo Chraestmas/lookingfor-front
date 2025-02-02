@@ -36,10 +36,12 @@ router.beforeEach(async (to, from , next)=>{
     console.log(res.data)
     if(res.data.superAdmin === 'Y'){
       next();
+    }else{
+      alert('접근 권한이 없습니다')
+    next('/');
     }
     
-    alert('접근 권한이 없습니다')
-    next('/');
+    
   }else if(to.meta.auth === 'login'){
     if(store.getters.getUserId || localStorage.getItem('userId')){
       next();
