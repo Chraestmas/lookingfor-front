@@ -39,13 +39,13 @@
                                         <h6 class="f-heading-detail-small-5">No.</h6>
                                     </div>
                                     <div id="w-node-_8c89afc6-fb43-aac8-8e7c-b9572e16add9-9a5c91e1">
-                                        <h6 class="f-heading-detail-small-5 permit_id">Id</h6>
+                                        <h6 class="f-heading-detail-small-5">Id</h6>
                                     </div>
                                     <div id="w-node-_8c89afc6-fb43-aac8-8e7c-b9572e16addc-9a5c91e1">
-                                        <h6 class="f-heading-detail-small-5 permit_name">name</h6>
+                                        <h6 class="f-heading-detail-small-5">name</h6>
                                     </div>
                                     <div id="w-node-_8c89afc6-fb43-aac8-8e7c-b9572e16addf-9a5c91e1">
-                                        <h6 class="f-heading-detail-small-5 permit_authorized">Authorized</h6>
+                                        <h6 class="f-heading-detail-small-5">Authorized</h6>
                                     </div>
                                 </div>
                             </div>
@@ -53,18 +53,18 @@
                             <div v-for="(user , idx) in users" v-bind:key="user.id" id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f7693f-9a5c91e1" class="f-career-row-wrapper">
                                 <div class="w-layout-grid f-career-row">
                                     <div>
-                                        <div class="f-paragraph-regular-3">{{ idx +1 }}</div>
+                                        <div class="f-paragraph-regular-3">{{ idx +1}}</div>
                                     </div>
                                     <div id="w-node-_28166595-c19e-c704-1a20-af36d3bb7ac7-9a5c91e1">
-                                        <div class="f-paragraph-regular-3 data_id">aa@aa.com</div>
+                                        <div class="f-paragraph-regular-3">{{ user.id }}</div>
                                     </div>
                                     <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76944-9a5c91e1">
-                                        <div class="f-paragraph-regular-3 f-text-color-gray-501 data_name">aa</div>
+                                        <div class="f-paragraph-regular-3 f-text-color-gray-501">{{ user.name }}</div>
                                     </div>
                                     <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76947-9a5c91e1">
                                         <div class="f-toggle-wrap-2">
                                             <label class="toggle-container">
-                                                <input type="checkbox" name="isFound" />
+                                                <input type="checkbox" :checked="user.permit === 'Y'"/>
                                                 <span class="slider"></span>
                                             </label>
                                         </div>
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        <!-- 반복 끝 -->
                         </div>
                     </div>
                 </div>
@@ -201,22 +201,6 @@ form {
     line-height: 24px;
 }
 
-/* .permit_userno  {
-     text-align: center;
-}
-
-.permit_id, .permit_name, .permit_authorized {
-    text-align: center;
-}
-
-.data_userno {
-    text-align: center;
-}
-
-.data_id, .data_name {
-    text-align: center;
-} */
-
 .f-margin-bottom-58 {
     margin-bottom: 40px;
 }
@@ -315,22 +299,20 @@ input:checked+.slider {
 input:checked+.slider:before {
     transform: translateX(25px);
 }
-/* 
+
 #w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76944-9a5c91e1 {
     place-self: center;
-} */
+}
 
 #w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76947-9a5c91e1[data-v-27f9f698] {
     justify-self: center;
 }
 
-
-
 .f-career-row-wrapper {
     border-bottom: 1px solid #e4e6f1;
     justify-content: space-between;
     align-items: center;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 </style>
