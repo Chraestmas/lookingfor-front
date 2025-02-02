@@ -64,7 +64,7 @@
                                     <div id="w-node-_5ef2a9ad-6511-e366-c735-67bfc5f76947-9a5c91e1">
                                         <div class="f-toggle-wrap-2">
                                             <label class="toggle-container">
-                                                <input type="checkbox" :checked="user.permit === 'Y'"/>
+                                                <input @input="(e)=>{onToggleClick(e, user.id)}" type="checkbox" :checked="user.permit === 'Y'"/>
                                                 <span class="slider"></span>
                                             </label>
                                         </div>
@@ -98,7 +98,7 @@ const users = ref([]);
 onMounted(async ()=>{
     const res = await axios.get(`http://localhost:8001/api/users`);
     console.log(res.data)
-    users.value = res.data;
+    users.value = res.data.filter((e)=>e.superAdmin === 'N');
 });
 
 async function onDeleteUser(id) {
@@ -107,6 +107,17 @@ async function onDeleteUser(id) {
     if(res.data == '성공'){
         users.value = users.value.filter((el)=>{return el.id !== id});
     }
+}
+
+async function onToggleClick(e, id){
+    console.log(e, id);
+    try{
+        await axios.put('http://localhost:8001/api/user/'+id + "?permit=" + (e.target.checked === true ? 'Y' : 'N'))
+
+    }catch(e){
+        alert('failed')
+    }
+
 }
 
 </script>

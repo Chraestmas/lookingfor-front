@@ -8,7 +8,8 @@ import ItemDetails from '@/pages/ItemDetails.vue';
 import AccountDetails from '@/pages/AccountDetails.vue';
 import AccountPermit from '@/pages/AccountPermit.vue';
 import {  createRouter, createWebHistory } from 'vue-router'
-
+import {store} from '../store/index';
+import axios from 'axios';
 
 const routes = [
     { path: '/', component: MainPage},
@@ -19,13 +20,35 @@ const routes = [
     { path: '/item-details/:id', component: ItemDetails},
     { path: '/password-recovery', component: PasswordRecovery},
     { path: '/item/:id/update', component: UploadPage},
-    { path: '/account-details', component: AccountDetails},
-    { path: '/account-permit', component: AccountPermit }
+    { path: '/account-details', component: AccountDetails  , meta:{auth:"login"}},
+    { path: '/account-permit', component: AccountPermit  , meta:{auth:"super"}}
 ]
  
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach(async (to, from , next)=>{
+  if(to.meta.auth === 'super' ){
+    console.log('ddfasdafsd',store)
+    const res = await axios.get(`http://localhost:8001/api/user/${store.getters.getUserId}`);
+    console.log(res.data)
+    if(res.data.superAdmin === 'Y'){
+      next();
+    }
+    
+    alert('접근 권한이 없습니다')
+    next('/');
+  }else if(to.meta.auth === 'login'){
+    if(store.getters.getUserId || localStorage.getItem('userId')){
+      next();
+    }else{
+      alert('login 후 이용 가능');
+      next('/');
+    }
+  }
+  next();
 })
 
 export default router;
