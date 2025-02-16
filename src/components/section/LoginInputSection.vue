@@ -57,6 +57,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 // State to control popup visibility
 const showPopup = ref(false);
@@ -115,7 +116,7 @@ async function login(){
         return;
     }
     try{
-        const response = await axios.post('http://localhost:8001/api/login', { id: email.value, password: password.value });
+        const response = await axios.post(`${VUE_APP_API_URL}/api/login`, { id: email.value, password: password.value });
         const res = response.data;
         console.log(response.data);
         // vuex(전역상태관리)에 저장

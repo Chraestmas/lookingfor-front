@@ -52,8 +52,9 @@ import axios from 'axios';
 import { ref, defineEmits, defineProps, watch } from 'vue';
 const props = defineProps(['existingImages'])
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
-const prevImages = ref(props.existingImages.map((e)=>({id:e.id, url:`http://localhost:8001${e.url}`})));
+const prevImages = ref(props.existingImages.map((e)=>({id:e.id, url:`${VUE_APP_API_URL}${e.url}`})));
 const imageFiles = ref([]);
 const hoveredIndex = ref(null);  // 현재 마우스가 올려진 이미지의 인덱스
 const fileInput = ref(null);  // input 엘리먼트 참조
@@ -82,7 +83,7 @@ const removeImage = async (index, id) => {
   imageFiles.value.splice(index, 1);
   if(id){
     try{
-      await axios.delete(`http://localhost:8001/api/image/${id}`);
+      await axios.delete(`${VUE_APP_API_URL}/api/image/${id}`);
       alert('image delete success')
     }catch(e){
       alert('image delete failed')
@@ -94,7 +95,7 @@ const removeImage = async (index, id) => {
 // existingImages의 값이 바뀔 때마다 prevImages를 갱신
 watch(() => props.existingImages, (newVal) => {
   if (newVal && Array.isArray(newVal)) {
-    prevImages.value = newVal.map(e => ({id:e.id, url:`http://localhost:8001${e.url}`}));
+    prevImages.value = newVal.map(e => ({id:e.id, url:`${VUE_APP_API_URL}${e.url}`}));
   }
 }, { immediate: true });
 </script>

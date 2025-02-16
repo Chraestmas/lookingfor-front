@@ -94,16 +94,18 @@ import axios from 'axios';
 const users = ref([]);
 
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 
 onMounted(async ()=>{
-    const res = await axios.get(`http://localhost:8001/api/users`);
+    const res = await axios.get(`${VUE_APP_API_URL}/api/users`);
     console.log(res.data)
     users.value = res.data.filter((e)=>e.superAdmin === 'N');
 });
 
 async function onDeleteUser(id) {
     console.log(id)
-    const res = await axios.delete('http://localhost:8001/api/user/' + id);
+    const res = await axios.delete(`${VUE_APP_API_URL}/api/user/` + id);
     if(res.data == '성공'){
         users.value = users.value.filter((el)=>{return el.id !== id});
     }
@@ -112,7 +114,7 @@ async function onDeleteUser(id) {
 async function onToggleClick(e, id){
     console.log(e, id);
     try{
-        await axios.put('http://localhost:8001/api/user/'+id + "?permit=" + (e.target.checked === true ? 'Y' : 'N'))
+        await axios.put(`${VUE_APP_API_URL}/api/user/`+id + "?permit=" + (e.target.checked === true ? 'Y' : 'N'))
 
     }catch(e){
         alert('failed')

@@ -42,8 +42,9 @@ const store = useStore();
 
 const user = ref(null);
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 onMounted(async ()=>{
-    let res = await axios.get('http://localhost:8001/api/user/' + store.getters.getUserId);
+    let res = await axios.get(`${VUE_APP_API_URL}/api/user/` + store.getters.getUserId);
     console.log(res.data);
     user.value = res.data;
 });

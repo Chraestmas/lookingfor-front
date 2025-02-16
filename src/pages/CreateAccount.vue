@@ -60,6 +60,8 @@ import router from '@/router';
 import axios from 'axios';
 import { ref } from 'vue';
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 const isModalOpen = ref(false);
 const popupTitle = ref('');
 const popupDetail = ref('');
@@ -120,7 +122,7 @@ async function handleSubmit(){
     return;
   }
   try{
-    const res = await axios.post("http://localhost:8001/api/user", {id:email.value, name:userName.value, password:password.value })
+    const res = await axios.post(`${VUE_APP_API_URL}/api/user`, {id:email.value, name:userName.value, password:password.value })
     console.log(res.data);
     if(res.data === null){
       popupTitle.value = 'Create Failed';

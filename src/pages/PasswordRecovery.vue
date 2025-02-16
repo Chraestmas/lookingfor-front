@@ -75,6 +75,8 @@ const showPopup = ref(false);
 const popupTitle = ref('');
 const popupDetail = ref('');
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 // Handle button click event from the popup
 const onButtonClick = ref(() => {
   console.log('Button clicked!');
@@ -123,7 +125,7 @@ async function submitCodeData() {
   // 서버로 인증 코드 보내기
   // 인증 코드 보내기 성공하면
   try{
-    let res = await axios.post('http://localhost:8001/api/email/verifyCode', {email:email.value, code:code.value})
+    let res = await axios.post(`${VUE_APP_API_URL}/api/email/verifyCode`, {email:email.value, code:code.value})
     closeCodePopup();
     isChecked.value = true;
     showPopup.value = true;
@@ -164,7 +166,7 @@ async function submitFormData() {
     // email로 코드보내기 api 요청
     //email로 코드 보내기가 성공하면
     try {
-      let res = await axios.post("http://localhost:8001/api/email/sendCode", { email: email.value });
+      let res = await axios.post(`${VUE_APP_API_URL}/api/email/sendCode`, { email: email.value });
       showPopup.value = true;
       popupTitle.value = 'Verfication Code Sent';
       popupDetail.value = res.data;
@@ -192,7 +194,7 @@ async function submitFormData() {
     // 재설정할 비밀번호 보내기
     try{
       // 비밀번호 재설정이 성공하면
-      let res = await axios.post("http://localhost:8001/api/user/resetPassword", {id:email.value, password:password.value});
+      let res = await axios.post(`${VUE_APP_API_URL}/api/user/resetPassword`, {id:email.value, password:password.value});
       showPopup.value = true;
       popupTitle.value = 'Update Success'
       popupDetail.value = res.data;

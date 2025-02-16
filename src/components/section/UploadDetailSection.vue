@@ -110,6 +110,7 @@ const description = ref(props.initialData.description || '');
 
 // 부모 컴포넌트에 전달할 업데이트 함수
 const emit = defineEmits(['update-form']);
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 // input 값이 변경될 때마다 부모에게 데이터 전달
 const updateParent = () => {
@@ -128,14 +129,14 @@ const updateParent = () => {
 };
 async function fetchCategory(){
  
-    let res = await axios.get('http://localhost:8001/api/category');
+    let res = await axios.get(`${VUE_APP_API_URL}/api/category`);
     categories.value = res.data;
     console.log(res.data);
   
 }
 
 async function fetchLocation(){
-  let res = await axios.get('http://localhost:8001/api/location');
+  let res = await axios.get(`${VUE_APP_API_URL}/api/location`);
   locations.value = res.data;
   console.log(res.data);
 }

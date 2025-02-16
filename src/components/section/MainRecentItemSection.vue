@@ -8,7 +8,7 @@
           class="text-link-arrow-2 w-inline-block">
           <img
             :src="item.pictures == null || item.pictures.length ==0 ? `https://cdn.prod.website-files.com/66f8d5504594ca1c1fb8ded5/671dd8500f7c9d454b070281_Screenshot%202024-10-27%20at%203.05.48%E2%80%AFPM.png` : 
-            `http://localhost:8001${item.pictures[0].url}?t=${new Date().getTime()}`"
+            `${VUE_APP_API_URL}${item.pictures[0].url}?t=${new Date().getTime()}`"
             loading="lazy" alt="" class="pricing-image">
           </RouterLink>
           <h3>{{item.name}}</h3>
@@ -31,10 +31,11 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 
 const items = ref([]);
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://localhost:8001/api/item?foundYn=N`);
+    const response = await axios.get(`${VUE_APP_API_URL}/api/item?foundYn=N`);
     // console.log(response.data);
     items.value = response.data.list;
   } catch (e) {

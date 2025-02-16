@@ -53,6 +53,8 @@ import axios from 'axios';
 import SearchSettingSection from '@/components/section/SearchSettingSection.vue';
 import SearchResultSection from '@/components/section/SearchResultSection.vue';
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 const itemList = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
@@ -64,7 +66,7 @@ const itemName = ref(null);
 async function apiRequest(categories, unclaimedOnly = false, itemName = null, page = 1) {
   console.log("Sending API request with", { categories, unclaimedOnly, page });
  
-  const res = await axios.get(`http://localhost:8001/api/item`, {
+  const res = await axios.get(`${VUE_APP_API_URL}/api/item`, {
     params: {
       categoryId: categories && categories.length != 0 ? categories.join(',') : null,
       foundYn: unclaimedOnly ? 'N' : null ,

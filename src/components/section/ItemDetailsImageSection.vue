@@ -15,7 +15,7 @@
             </div>
             <div class="carousel-inner" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
                 <div class="carousel-item" v-for="(image) in slides" :key="image.id">
-                    <img :src="`http://localhost:8001${image.url}`" alt="Carousel Image" class="carousel-image" />
+                    <img :src="`${VUE_APP_API_URL}${image.url}`" alt="Carousel Image" class="carousel-image" />
                 </div>
                 <div v-if="slides.length === 0" class="carousel-item">
                     <img :src="`https://cdn.prod.website-files.com/66f8d5504594ca1c1fb8ded5/671dd8500f7c9d454b070281_Screenshot%202024-10-27%20at%203.05.48%E2%80%AFPM.png`" alt="Carousel Image" class="carousel-image" />
@@ -87,6 +87,7 @@
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 const currentIndex = ref(0); // 현재 슬라이드 인덱스
 const slides = computed(()=>item.value.pictures.map(e=>({id : e.id, url : e.url})));
@@ -132,7 +133,7 @@ const moveToPrevSlide = () => {
 };
 
 onMounted(async ()=>{
-    const res = await axios.get('http://localhost:8001/api/item/' +  route.params.id)
+    const res = await axios.get(`${VUE_APP_API_URL}/api/item/` +  route.params.id)
     console.log(res.data);
     item.value = res.data;
 });

@@ -11,6 +11,9 @@ import {  createRouter, createWebHistory } from 'vue-router'
 import {store} from '../store/index';
 import axios from 'axios';
 
+
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 const routes = [
     { path: '/', component: MainPage},
     { path: '/upload-item', component: UploadPage},
@@ -32,7 +35,7 @@ const router = createRouter({
 router.beforeEach(async (to, from , next)=>{
   if(to.meta.auth === 'super' ){
     console.log('ddfasdafsd',store)
-    const res = await axios.get(`http://localhost:8001/api/user/${store.getters.getUserId}`);
+    const res = await axios.get(`${VUE_APP_API_URL}/api/user/${store.getters.getUserId}`);
     console.log(res.data)
     if(res.data.superAdmin === 'Y'){
       next();

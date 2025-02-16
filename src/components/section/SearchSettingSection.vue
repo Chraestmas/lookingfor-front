@@ -85,6 +85,7 @@ const categories = ref([{id:1, name:'aaa'}, {id:2, name:'bbb'}, {id:3, name:'ccc
 const itemName = ref('');
 
 const emit = defineEmits(['update-filter'])
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 
 // 선택한 체크박스 정보를 담아줄 배열
@@ -139,7 +140,7 @@ function onItemNameSearch() {
 }
 
 async function fetchCategories(){
-  const res = await axios.get('http://localhost:8001/api/category');
+  const res = await axios.get(`${VUE_APP_API_URL}/api/category`);
   categories.value = res.data;
 }
 

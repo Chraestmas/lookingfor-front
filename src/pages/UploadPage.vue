@@ -24,6 +24,7 @@ const isEdit = computed(()=>route.params.id ? true : false);
 const store = useStore();  // Vuex 스토어 가져오기
 const userId = computed(() => store.getters.getUserId);  // 로그인한 userId 가져오기
 
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 const errMsgs = ref({
   categoryErrMsg :'',
@@ -113,7 +114,7 @@ const fetchFormData = async () => {
   try {
     // 서버에서 기존 데이터 가져오는 예시
     // 실제로는 axios나 fetch로 API 호출을 해야 합니다.
-    const response = await axios.get(`http://localhost:8001/api/item/${route.params.id}`); // 예시 URL
+    const response = await axios.get(`${VUE_APP_API_URL}/api/item/${route.params.id}`); // 예시 URL
 
     // 데이터를 formData에 할당
     formData.value = response.data;
@@ -171,10 +172,10 @@ const handleSubmit = async () => {
     console.log(key, value);
   });
   try {
-    let url = 'http://localhost:8001/api/item';
+    let url = `${VUE_APP_API_URL}/api/item`;
     let response = null;
     if(isEdit.value === true){
-      url = `http://localhost:8001/api/item/${route.params.id}`
+      url = `${VUE_APP_API_URL}/api/item/${route.params.id}`
       response = await axios.put(url, formDataToSend, {headers: {
           'Content-Type': 'multipart/form-data' // 요청 헤더에 멀티파트로 지정
         }});
